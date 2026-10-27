@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Katalog Buku Preloved</title>
+<style>
+:root{--bg:#f2f3ef;--card:#fff;--ink:#1f2a2e;--mute:#68757a;--line:#dde1dc;--acc:#1f5f5b;--accink:#fff;--sold:#a23b3b;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14191b;--card:#1d2427;--ink:#e9eeee;--mute:#93a2a6;--line:#2c373b;--acc:#5fb3ab;--accink:#10201f;--sold:#e07a7a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14191b;--card:#1d2427;--ink:#e9eeee;--mute:#93a2a6;--line:#2c373b;--acc:#5fb3ab;--accink:#10201f;--sold:#e07a7a;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:28px 16px 48px}
+h1{font:700 2rem/1.15 Georgia,"Iowan Old Style",serif;margin:0 0 6px}
+.sub{color:var(--mute);margin:0 0 20px;max-width:56ch}
+.bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+input[type=search]{flex:1 1 220px;min-width:0;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit}
+.chips{display:flex;gap:6px}
+.chip{padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--acc);color:var(--accink);border-color:var(--acc)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.count{color:var(--mute);font-size:.9rem;margin:10px 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:18px}
+.book{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.cover{position:relative;aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:flex-end;padding:14px 12px 14px 26px;color:#fff;overflow:hidden}
+.cover::before{content:"";position:absolute;inset:0 auto 0 0;width:14px;background:rgba(0,0,0,.28);box-shadow:inset -2px 0 0 rgba(255,255,255,.14)}
+.cover b{font:700 1.05rem/1.2 Georgia,"Iowan Old Style",serif}
+.cover i{font:.8rem/1.3 system-ui,sans-serif;opacity:.85;margin-top:6px;font-style:normal}
+.sold .cover{filter:grayscale(.85) brightness(.8)}
+.stamp{position:absolute;top:34%;left:50%;transform:translate(-50%,-50%) rotate(-12deg);border:3px solid #fff;color:#fff;padding:4px 12px;font:700 1.1rem Georgia,serif;border-radius:4px;background:rgba(162,59,59,.88)}
+.info{padding:12px;display:flex;flex-direction:column;gap:10px;flex:1}
+.price{font-weight:700}
+.sold .price{color:var(--mute);text-decoration:line-through}
+.kode{color:var(--mute);font-size:.8rem}
+.buy{margin-top:auto;display:block;text-align:center;padding:10px;border-radius:8px;background:var(--acc);color:var(--accink);text-decoration:none;font-weight:600}
+.buy[aria-disabled=true]{background:transparent;color:var(--mute);border:1px dashed var(--line);pointer-events:none}
+.empty{grid-column:1/-1;padding:40px 0;text-align:center;color:var(--mute)}
+.foot{margin-top:32px;color:var(--mute);font-size:.88rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Buku preloved pilihan</h1>
+  <p class="sub">Buku bekas dalam kondisi terawat. Ongkir ditanggung pembeli. Klik tombol beli untuk lanjut ke chat, judul dan kode buku terisi otomatis.</p>
+  <div class="bar">
+    <input type="search" id="q" placeholder="Cari judul atau penulis" aria-label="Cari judul atau penulis">
+    <div class="chips" id="chips">
+      <button class="chip" data-f="all" aria-pressed="true">Semua</button>
+      <button class="chip" data-f="ready" aria-pressed="false">Tersedia</button>
+      <button class="chip" data-f="sold" aria-pressed="false">Terjual</button>
+    </div>
+  </div>
+  <div class="count" id="count"></div>
+  <div class="grid" id="grid"></div>
+  <p class="foot">Stok diperbarui berkala. Buku yang sudah terjual tetap ditampilkan sebagai referensi.</p>
+</div>
+<script>
+// Ganti dengan nomor WhatsApp kamu, format internasional tanpa + atau spasi (contoh: 6281234567890)
+var WA = "62XXXXXXXXXX";
+// Format: [kode, judul, penulis, harga, status] dengan status "ready" atau "sold"
+var BOOKS = [
+  ["B-001","Cat Stories","James Herriot",35000,"sold"],
+  ["B-002","LOTR: The Fellowship of the Ring","J. R. R. Tolkien",75000,"sold"],
+  ["B-003","LOTR: The Return of the King","J. R. R. Tolkien",75000,"sold"],
+  ["B-004","The Lost Symbol","Dan Brown",75000,"sold"],
+  ["B-005","Harry Potter and the Chamber of Secrets","J. K. Rowling",65000,"sold"],
+  ["B-006","Harry Potter and the Prisoner of Azkaban (1)","J. K. Rowling",85000,"sold"],
+  ["B-007","Harry Potter and the Prisoner of Azkaban (2)","J. K. Rowling",140000,"sold"],
+  ["B-008","Anne’s House of Dreams","Lucy M. Montgomery",65000,"sold"]
+];
+var filter = "all", query = "";
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function rp(n){return "Rp" + n.toLocaleString("id-ID")}
+function render(){
+  var q = query.trim().toLowerCase();
+  var list = BOOKS.map(function(b,i){return {b:b,i:i}}).filter(function(x){
+    var b = x.b;
+    if(filter !== "all" && b[4] !== filter) return false;
+    return !q || (b[1] + " " + b[2]).toLowerCase().indexOf(q) > -1;
+  });
+  document.getElementById("count").textContent = list.length + " buku";
+  var html = list.map(function(x){
+    var b = x.b, sold = b[4] === "sold", hue = (x.i * 47 + 190) % 360;
+    var msg = "Halo kak, aku mau beli buku “" + b[1] + "” (" + b[0] + ")";
+    var href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
+    return '<article class="book' + (sold ? " sold" : "") + '">' +
+      '<div class="cover" style="background:hsl(' + hue + ',38%,32%)">' +
+      (sold ? '<span class="stamp">Terjual</span>' : "") +
+      '<b>' + esc(b[1]) + '</b><i>' + esc(b[2]) + '</i></div>' +
+      '<div class="info"><div><div class="price">' + rp(b[3]) + '</div><div class="kode">Kode ' + esc(b[0]) + '</div></div>' +
+      (sold ? '<a class="buy" aria-disabled="true">Sudah terjual</a>'
+            : '<a class="buy" href="' + href + '" target="_blank" rel="noopener">Beli lewat WhatsApp</a>') +
+      '</div></article>';
+  }).join("");
+  document.getElementById("grid").innerHTML = html || '<div class="empty">Tidak ada buku yang cocok. Coba kata kunci lain atau pilih filter Semua.</div>';
+}
+document.getElementById("q").addEventListener("input", function(e){query = e.target.value; render()});
+document.getElementById("chips").addEventListener("click", function(e){
+  var f = e.target.getAttribute("data-f"); if(!f) return;
+  filter = f;
+  [].forEach.call(document.querySelectorAll(".chip"), function(c){c.setAttribute("aria-pressed", c.getAttribute("data-f") === f)});
+  render();
+});
+render();
+</script>
+</body>
+</html>
