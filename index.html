@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Katalog Buku Preloved</title>
+<title>Katalog Buku - adopt.a.mine</title>
 <style>
 :root{--bg:#f2f3ef;--card:#fff;--ink:#1f2a2e;--mute:#68757a;--line:#dde1dc;--acc:#1f5f5b;--accink:#fff;--thbg:#101010;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14191b;--card:#1d2427;--ink:#e9eeee;--mute:#93a2a6;--line:#2c373b;--acc:#5fb3ab;--accink:#10201f;--thbg:#3a4549;color-scheme:dark}}
@@ -59,7 +59,7 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 </head>
 <body>
 <div class="wrap">
-  <h1>Buku preloved pilihan</h1>
+  <h1>Katalog Buku</h1>
   <p class="sub">Buku bekas dalam kondisi terawat. Ongkir ditanggung pembeli. Pilih beli lewat WhatsApp, DM Threads, atau Shopee, judul dan kode buku ikut terkirim.</p>
   <input type="search" id="q" placeholder="Cari judul, penulis, atau kategori" aria-label="Cari judul, penulis, atau kategori">
 
@@ -89,21 +89,21 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 <script>
 // ====== ISI 3 BARIS INI ======
 // Nomor WhatsApp: format internasional tanpa + atau spasi (contoh: 6281234567890)
-var WA = "62XXXXXXXXXX";
+var WA = "6285791944282";
 // Username Threads tanpa tanda @ (contoh: tokobukumu)
-var THREADS_USER = "usernamethreads";
+var THREADS_USER = "adopt.a.mine";
 // Link toko Shopee, dipakai kalau sebuah buku belum punya link Shopee sendiri
-var SHOPEE_SHOP = "https://shopee.co.id/usernameshopee";
+var SHOPEE_SHOP = "https://shopee.co.id/shop/24761013";
 // ===== pengali harga Shopee (1.1 = harga + 10% admin) =====
 var SHOPEE_MARKUP = 1.1;
 // Format: [kode, judul, penulis, harga, status, kategori, link Shopee buku ini (boleh dikosongkan)]
 // status: "ready" atau "sold"
 // Kategori baru otomatis muncul di bagian Kategori begitu ada buku yang memakainya.
 var BOOKS = [
-  ["B-001","Cat Stories","James Herriot",35000,"sold","Hewan"],
+  ["B-001","Cat Stories","James Herriot",35000,"ready","Hewan"],
   ["B-002","LOTR: The Fellowship of the Ring","J. R. R. Tolkien",75000,"sold","Fantasi"],
   ["B-003","LOTR: The Return of the King","J. R. R. Tolkien",75000,"sold","Fantasi"],
-  ["B-004","The Lost Symbol","Dan Brown",75000,"sold","Thriller"],
+  ["B-004","The Lost Symbol","Dan Brown",75000,"ready","CTM"],
   ["B-005","Harry Potter and the Chamber of Secrets","J. K. Rowling",65000,"sold","Fantasi"],
   ["B-006","Harry Potter and the Prisoner of Azkaban (1)","J. K. Rowling",85000,"sold","Fantasi"],
   ["B-007","Harry Potter and the Prisoner of Azkaban (2)","J. K. Rowling",140000,"sold","Fantasi"],
