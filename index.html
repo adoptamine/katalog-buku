@@ -24,22 +24,31 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 .chip[hidden]{display:none}
 .chip[aria-pressed=true]{background:var(--acc);color:var(--accink);border-color:var(--acc)}
 :focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.cat{position:relative;text-align:left;padding:14px 12px 14px 24px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer;overflow:hidden}
-.cat::before{content:"";position:absolute;inset:0 auto 0 0;width:10px;background:var(--h)}
-.cat b{display:block;font:700 1.02rem/1.25 Georgia,"Iowan Old Style",serif}
-.cat span{color:var(--mute);font-size:.82rem}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.cat{display:flex;align-items:center;gap:12px;text-align:left;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
 .cat[aria-pressed=true]{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc)}
+.ico{position:relative;flex:none;width:52px;height:52px;border-radius:6px;overflow:hidden;display:grid;place-items:center;color:#fff;font:700 1rem Georgia,"Iowan Old Style",serif}
+.ico img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ico.ok span{display:none}
+.ico.ok img{background:var(--card)}
+.ct b{display:block;font:700 1rem/1.25 Georgia,"Iowan Old Style",serif}
+.ct small{color:var(--mute);font-size:.82rem}
 .count{color:var(--mute);font-size:.9rem;margin:8px 0 16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:18px}
 .book{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .cover{position:relative;aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:flex-end;padding:14px 12px 14px 26px;color:#fff;overflow:hidden}
 .cover::before{content:"";position:absolute;inset:0 auto 0 0;width:14px;background:rgba(0,0,0,.28);box-shadow:inset -2px 0 0 rgba(255,255,255,.14)}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .cover b{font:700 1.05rem/1.2 Georgia,"Iowan Old Style",serif}
 .cover i{font:.8rem/1.3 system-ui,sans-serif;opacity:.85;margin-top:6px;font-style:normal}
+.has-img .cover::before,.has-img .cover b,.has-img .cover i{display:none}
 .sold .cover{filter:grayscale(.85) brightness(.8)}
-.stamp{position:absolute;top:34%;left:50%;transform:translate(-50%,-50%) rotate(-12deg);border:3px solid #fff;color:#fff;padding:4px 12px;font:700 1.1rem Georgia,serif;border-radius:4px;background:rgba(162,59,59,.88)}
+.stamp{position:absolute;z-index:2;top:34%;left:50%;transform:translate(-50%,-50%) rotate(-12deg);border:3px solid #fff;color:#fff;padding:4px 12px;font:700 1.1rem Georgia,serif;border-radius:4px;background:rgba(162,59,59,.88)}
 .info{padding:12px;display:flex;flex-direction:column;gap:10px;flex:1}
+.meta{display:none}
+.has-img .meta{display:block}
+.meta .t{font:700 .95rem/1.25 Georgia,"Iowan Old Style",serif}
+.meta .a{color:var(--mute);font-size:.82rem}
 .price{font-weight:700}
 .sold .price{color:var(--mute);text-decoration:line-through}
 .kode{color:var(--mute);font-size:.8rem;line-height:1.35}
@@ -96,9 +105,20 @@ var THREADS_USER = "adopt.a.mine";
 var SHOPEE_SHOP = "https://shopee.co.id/shop/24761013";
 // ===== pengali harga Shopee (1.1 = harga + 10% admin) =====
 var SHOPEE_MARKUP = 1.1;
+// ===== urutan kategori (opsional) =====
+// Isi nama kategori sesuai urutan yang kamu mau, contoh: ["Teenlit","CTM","Rare Finds"]
+// Kategori yang tidak ditulis di sini tampil setelahnya, sesuai urutan kemunculan di daftar buku.
+var CATEGORY_ORDER = [];
+// ===== FOTO (opsional) =====
+// Foto sampul buku : images/buku/<kode huruf kecil>.jpg      contoh: images/buku/b-001.jpg
+// Logo kategori    : images/kategori/<nama kategori>.png     contoh: images/kategori/ctm.png
+//   (nama kategori ditulis huruf kecil, spasi dan simbol jadi tanda hubung: "Rare Finds" jadi rare-finds)
+// Kalau fotonya belum ada, otomatis tampil blok warna seperti biasa.
 // Format: [kode, judul, penulis, harga, status, kategori, link Shopee buku ini (boleh dikosongkan)]
 // status: "ready" atau "sold"
 // Kategori baru otomatis muncul di bagian Kategori begitu ada buku yang memakainya.
+// Satu buku boleh masuk beberapa kategori, pisahkan dengan |  contoh: "CTM | New Arrival!"
+// Warna sampul (kalau belum ada foto) mengikuti kategori pertama.
 var BOOKS = [
   ["B-001","Cat Stories","James Herriot",35000,"ready","Hewan"],
   ["B-002","LOTR: The Fellowship of the Ring","J. R. R. Tolkien",75000,"sold","Fantasi"],
@@ -112,10 +132,32 @@ var BOOKS = [
 var ICON_WA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-8.1 14.4L2.6 21.4l4.6-1.2A9.5 9.5 0 1 0 12 2.5zm0 1.9a7.6 7.6 0 1 1-3.9 14.1l-.4-.2-2.4.6.6-2.3-.3-.4A7.6 7.6 0 0 1 12 4.4zM8.9 7.8c-.2 0-.5.1-.7.4-.3.3-.9.9-.9 2.1s1 2.5 1.1 2.7c.1.2 1.8 2.9 4.5 3.9 2.2.9 2.7.7 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.5-.3-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2-1.2-.7-.7-1.2-1.5-1.4-1.8-.1-.2 0-.4.1-.5l.4-.4.3-.5v-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4z"/></svg>';
 var ICON_TH = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.2 2.5c-5.6 0-9 3.4-9 9.5s3.4 9.5 9 9.5c4.6 0 7.3-2.200 7.300-5.500 0-2.400-1.500-3.900-4.100-4.300-.1-2.300-1.400-3.600-3.500-3.600-1.400 0-2.500.6-3.100 1.600l1.500 1c.4-.6 1-.9 1.700-.9 1 0 1.600.6 1.700 1.800-.5-.1-1.100-.1-1.700-.1-2.300 0-3.800 1.200-3.800 3 0 1.800 1.500 3 3.500 3 1.900 0 3.200-1 3.700-2.700 1 .3 1.400.9 1.400 1.800 0 1.500-1.700 3.100-5.400 3.100-4.300 0-7-2.600-7-7.500s2.700-7.500 7.100-7.500c3.200 0 5.300 1.300 6.200 3.900l1.800-.6c-1.200-3.200-3.800-5-8-5zm-.9 11.100c-1 0-1.600-.5-1.600-1.200s.7-1.200 1.900-1.200c.5 0 1 0 1.500.1-.1 1.500-.8 2.300-1.800 2.300z"/></svg>';
 var ICON_SP = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.500a3.700 3.700 0 0 0-3.700 3.500H4.500L3.500 21.500h17L19.500 6h-3.800A3.700 3.700 0 0 0 12 2.500zm0 1.800c1 0 1.800.7 1.900 1.700h-3.800c.1-1 .9-1.700 1.900-1.700zm.1 6.200c1.600 0 2.600.8 2.700 1.800h-1.400c-.1-.4-.6-.7-1.300-.7-.7 0-1.100.3-1.100.7 0 1.200 4 .6 4 3.100 0 1.300-1.200 2.200-3 2.200-1.700 0-2.900-.8-3-2h1.500c.1.500.7.9 1.500.9.8 0 1.300-.3 1.300-.8 0-1.300-4-.6-4-3.100 0-1.200 1.100-2.100 2.800-2.100z"/></svg>';
+var EXTS = ["jpg","png","webp"];
+var ON_BOOK = "this.closest('.book').classList.add('has-img')";
+var ON_CAT = "this.parentNode.classList.add('ok')";
 var filter = "all", query = "", cat = "", toastTimer;
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function rp(n){return "Rp" + n.toLocaleString("id-ID")}
-function catOf(b){return b[5] || "Lainnya"}
+// Satu buku boleh punya beberapa kategori: tulis dipisah tanda | , contoh "CTM | New Arrival!"
+function catsOf(b){
+  var c = b[5];
+  if(!c) return ["Lainnya"];
+  var a = (Array.isArray(c) ? c : String(c).split("|")).map(function(x){return String(x).trim()})
+    .filter(function(x, i, arr){return x && arr.indexOf(x) === i});
+  return a.length ? a : ["Lainnya"];
+}
+function catOf(b){return catsOf(b)[0]}
+function slug(n){return n.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")}
+function initials(n){return n.replace(/[^A-Za-z0-9]/g,"").slice(0,2).toUpperCase() || "#"}
+// Mencoba jpg, lalu png, lalu webp. Kalau semuanya tidak ada, gambar dibuang dan blok warna yang tampil.
+function nextImg(el){
+  var i = +(el.getAttribute("data-i") || 0) + 1;
+  if(i < EXTS.length){el.setAttribute("data-i", i); el.src = el.getAttribute("data-base") + "." + EXTS[i]}
+  else el.remove();
+}
+function imgTag(base, onload){
+  return '<img src="' + base + '.jpg" data-base="' + base + '" data-i="0" alt="" loading="lazy" onload="' + onload + '" onerror="nextImg(this)">';
+}
 function toast(t){
   var el = document.getElementById("toast");
   el.textContent = t; el.className = "on";
@@ -125,29 +167,36 @@ function toast(t){
 function categories(){
   var map = {}, order = [];
   BOOKS.forEach(function(b){
-    var c = catOf(b);
-    if(!map[c]){map[c] = {n:0, r:0}; order.push(c)}
-    map[c].n++;
-    if(b[4] === "ready") map[c].r++;
+    catsOf(b).forEach(function(c){
+      if(!map[c]){map[c] = {n:0, r:0}; order.push(c)}
+      map[c].n++;
+      if(b[4] === "ready") map[c].r++;
+    });
+  });
+  order.sort(function(a,b){
+    var x = CATEGORY_ORDER.indexOf(a), y = CATEGORY_ORDER.indexOf(b);
+    return (x < 0 ? 9999 : x) - (y < 0 ? 9999 : y);
   });
   return order.map(function(c){return {name:c, n:map[c].n, r:map[c].r}});
 }
+var CATS = categories();
 function hueOf(c){
-  var i = categories().map(function(x){return x.name}).indexOf(c);
+  var i = CATS.map(function(x){return x.name}).indexOf(c);
   return ((i < 0 ? 0 : i) * 47 + 190) % 360;
 }
 function renderCats(){
-  document.getElementById("cats").innerHTML = categories().map(function(c){
-    return '<button class="cat" data-cat="' + esc(c.name) + '" aria-pressed="' + (cat === c.name) + '" style="--h:hsl(' + hueOf(c.name) + ',38%,38%)">' +
-      '<b>' + esc(c.name) + '</b><span>' + c.r + ' tersedia dari ' + c.n + '</span></button>';
+  document.getElementById("cats").innerHTML = CATS.map(function(c){
+    return '<button class="cat" data-cat="' + esc(c.name) + '" aria-pressed="' + (cat === c.name) + '">' +
+      '<span class="ico" style="background:hsl(' + hueOf(c.name) + ',38%,38%)"><span>' + esc(initials(c.name)) + '</span>' + imgTag("images/kategori/" + slug(c.name), ON_CAT) + '</span>' +
+      '<span class="ct"><b>' + esc(c.name) + '</b><small>' + c.r + ' tersedia dari ' + c.n + '</small></span></button>';
   }).join("");
 }
 function render(){
   var q = query.trim().toLowerCase();
   var list = BOOKS.filter(function(b){
-    if(cat && catOf(b) !== cat) return false;
+    if(cat && catsOf(b).indexOf(cat) < 0) return false;
     if(filter !== "all" && b[4] !== filter) return false;
-    return !q || (b[1] + " " + b[2] + " " + catOf(b)).toLowerCase().indexOf(q) > -1;
+    return !q || (b[1] + " " + b[2] + " " + catsOf(b).join(" ")).toLowerCase().indexOf(q) > -1;
   });
   var clear = document.getElementById("clear");
   clear.hidden = !cat;
@@ -168,9 +217,11 @@ function render(){
         '</div><div class="note">Shopee ' + rp(Math.round(b[3] * SHOPEE_MARKUP)) + ' (+10% admin)</div>';
     return '<article class="book' + (sold ? " sold" : "") + '">' +
       '<div class="cover" style="background:hsl(' + hue + ',38%,32%)">' +
+      imgTag("images/buku/" + encodeURIComponent(b[0].toLowerCase()), ON_BOOK) +
       (sold ? '<span class="stamp">Terjual</span>' : "") +
       '<b>' + esc(b[1]) + '</b><i>' + esc(b[2]) + '</i></div>' +
-      '<div class="info"><div><div class="price">' + rp(b[3]) + '</div><div class="kode">Kode ' + esc(b[0]) + '</div><div class="kode">' + esc(catOf(b)) + '</div></div>' + acts + '</div></article>';
+      '<div class="info"><div class="meta"><div class="t">' + esc(b[1]) + '</div><div class="a">' + esc(b[2]) + '</div></div>' +
+      '<div><div class="price">' + rp(b[3]) + '</div><div class="kode">Kode ' + esc(b[0]) + '</div><div class="kode">' + esc(catsOf(b).join(", ")) + '</div></div>' + acts + '</div></article>';
   }).join("");
   document.getElementById("grid").innerHTML = html || '<div class="empty">Tidak ada buku yang cocok. Coba kata kunci lain atau pilih filter Semua.</div>';
 }
