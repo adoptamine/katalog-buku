@@ -190,14 +190,15 @@ function categories(){
   return order.map(function(c){return {name:c, n:map[c].n, r:map[c].r}});
 }
 var CATS = categories();
-function hueOf(c){
+var PALETTE = ["#2d56a8","#3f6fc4","#1f4287","#4a7fd0","#2b6f9e","#5a62b8","#2f7fa8","#4458a8"];
+function colorOf(c){
   var i = CATS.map(function(x){return x.name}).indexOf(c);
-  return ((i < 0 ? 0 : i) * 47 + 190) % 360;
+  return PALETTE[(i < 0 ? 0 : i) % PALETTE.length];
 }
 function renderCats(){
   document.getElementById("cats").innerHTML = CATS.map(function(c){
     return '<button class="cat" data-cat="' + esc(c.name) + '" aria-pressed="' + (cat === c.name) + '">' +
-      '<span class="ico" style="background:hsl(' + hueOf(c.name) + ',38%,38%)"><span>' + esc(initials(c.name)) + '</span>' + imgTag("images/kategori/" + slug(c.name), ON_CAT) + '</span>' +
+      '<span class="ico" style="background:' + colorOf(c.name) + '"><span>' + esc(initials(c.name)) + '</span>' + imgTag("images/kategori/" + slug(c.name), ON_CAT) + '</span>' +
       '<span class="ct"><b>' + esc(c.name) + '</b><small>' + c.r + ' tersedia dari ' + c.n + '</small></span></button>';
   }).join("");
 }
@@ -213,7 +214,7 @@ function render(){
   clear.textContent = cat ? "Kategori: " + cat + "  ✕" : "";
   document.getElementById("count").textContent = list.length + " buku";
   var html = list.map(function(b){
-    var sold = b[4] === "sold", hue = hueOf(catOf(b));
+    var sold = b[4] === "sold", color = colorOf(catOf(b));
     var msg = "Halo kak, aku mau beli buku “" + b[1] + "” (" + b[0] + ")";
     var wa = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
     var th = "https://www.threads.com/@" + THREADS_USER;
@@ -226,7 +227,7 @@ function render(){
           '<a class="act sp" href="' + esc(sp) + '" target="_blank" rel="noopener" aria-label="Beli lewat Shopee" title="Shopee">' + ICON_SP + '</a>' +
         '</div><div class="note">Shopee ' + rp(Math.round(b[3] * SHOPEE_MARKUP)) + ' (+10% admin)</div>';
     return '<article class="book' + (sold ? " sold" : "") + '">' +
-      '<div class="cover" style="background:hsl(' + hue + ',38%,32%)">' +
+      '<div class="cover" style="background:' + color + '">' +
       imgTag("images/buku/" + encodeURIComponent(b[0].toLowerCase()), ON_BOOK) +
       (sold ? '<span class="stamp">Terjual</span>' : "") +
       '<b>' + esc(b[1]) + '</b><i>' + esc(b[2]) + '</i></div>' +
