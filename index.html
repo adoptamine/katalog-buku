@@ -320,7 +320,7 @@ function render(){
     var th = "https://www.threads.com/@" + THREADS_USER;
     var sp = shopeeOf(b) || SHOPEE_SHOP;
     var acts = sold
-      ? '<span class="done">Sudah terjual</span>'
+      ? '<span class="done">Sold</span>'
       : '<div class="acts">' +
           '<a class="act wa" href="' + esc(wa) + '" target="_blank" rel="noopener" aria-label="Beli lewat WhatsApp" title="WhatsApp">' + ICON_WA + '</a>' +
           '<a class="act th" href="' + esc(th) + '" target="_blank" rel="noopener" data-msg="' + esc(msg) + '" aria-label="Beli lewat DM Threads" title="DM Threads">' + ICON_TH + '</a>' +
@@ -329,7 +329,7 @@ function render(){
     return '<article class="book' + (sold ? " sold" : "") + '">' +
       '<div class="cover" style="background:' + color + '">' +
       imgTag("images/buku/" + encodeURIComponent(b[0].toLowerCase()), ON_BOOK) +
-      (sold ? '<span class="stamp">Terjual</span>' : "") +
+      (sold ? '<span class="stamp">Sold</span>' : "") +
       '<b>' + esc(b[1]) + '</b><i>' + esc(b[2]) + '</i></div>' +
       '<div class="info"><div class="meta"><div class="t">' + esc(b[1]) + '</div><div class="a">' + esc(b[2]) + '</div></div>' +
       '<div><div class="price">' + rp(b[3]) + '</div><div class="kode">Kode ' + esc(b[0]) + '</div><div class="kode">' + esc(catsOf(b).join(", ")) + '</div>' + (langOf(b) ? '<div><span class="lang">' + esc(langOf(b)) + '</span></div>' : '') + '</div>' + acts + '</div></article>';
