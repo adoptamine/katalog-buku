@@ -57,6 +57,7 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 .price{font-weight:800;color:var(--acc)}
 .sold .price{color:var(--mute);text-decoration:line-through}
 .kode{color:var(--mute);font-size:.8rem;line-height:1.35}
+.lang{display:inline-block;font-size:.72rem;font-weight:700;color:var(--acc);background:var(--tint);border-radius:999px;padding:2px 9px}
 .acts{margin-top:auto;display:flex;gap:8px}
 .act{flex:1;height:42px;border-radius:10px;display:grid;place-items:center;color:#fff;text-decoration:none}
 .act svg{width:22px;height:22px;fill:currentColor}
@@ -157,6 +158,10 @@ function catsOf(b){
   return a.length ? a : ["Lainnya"];
 }
 function catOf(b){return catsOf(b)[0]}
+// Isian ke-7 = bahasa, isian ke-8 = link Shopee buku (opsional). Link Shopee lama di isian ke-7 tetap terbaca.
+function isUrl(v){return /^https?:/i.test(String(v || ""))}
+function langOf(b){return b[6] && !isUrl(b[6]) ? String(b[6]).trim() : ""}
+function shopeeOf(b){return isUrl(b[6]) ? b[6] : (isUrl(b[7]) ? b[7] : "")}
 function slug(n){return n.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")}
 function initials(n){return n.replace(/[^A-Za-z0-9]/g,"").slice(0,2).toUpperCase() || "#"}
 // Mencoba jpg, lalu png, lalu webp. Kalau semuanya tidak ada, gambar dibuang dan blok warna yang tampil.
@@ -207,7 +212,7 @@ function render(){
   var list = BOOKS.filter(function(b){
     if(cat && catsOf(b).indexOf(cat) < 0) return false;
     if(filter !== "all" && b[4] !== filter) return false;
-    return !q || (b[1] + " " + b[2] + " " + catsOf(b).join(" ")).toLowerCase().indexOf(q) > -1;
+    return !q || (b[1] + " " + b[2] + " " + catsOf(b).join(" ") + " " + langOf(b)).toLowerCase().indexOf(q) > -1;
   });
   var clear = document.getElementById("clear");
   clear.hidden = !cat;
@@ -218,7 +223,7 @@ function render(){
     var msg = "Halo kak, aku mau beli buku “" + b[1] + "” (" + b[0] + ")";
     var wa = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
     var th = "https://www.threads.com/@" + THREADS_USER;
-    var sp = b[6] || SHOPEE_SHOP;
+    var sp = shopeeOf(b) || SHOPEE_SHOP;
     var acts = sold
       ? '<span class="done">Sudah terjual</span>'
       : '<div class="acts">' +
@@ -232,7 +237,7 @@ function render(){
       (sold ? '<span class="stamp">Terjual</span>' : "") +
       '<b>' + esc(b[1]) + '</b><i>' + esc(b[2]) + '</i></div>' +
       '<div class="info"><div class="meta"><div class="t">' + esc(b[1]) + '</div><div class="a">' + esc(b[2]) + '</div></div>' +
-      '<div><div class="price">' + rp(b[3]) + '</div><div class="kode">Kode ' + esc(b[0]) + '</div><div class="kode">' + esc(catsOf(b).join(", ")) + '</div></div>' + acts + '</div></article>';
+      '<div><div class="price">' + rp(b[3]) + '</div><div class="kode">Kode ' + esc(b[0]) + '</div><div class="kode">' + esc(catsOf(b).join(", ")) + '</div>' + (langOf(b) ? '<div><span class="lang">' + esc(langOf(b)) + '</span></div>' : '') + '</div>' + acts + '</div></article>';
   }).join("");
   document.getElementById("grid").innerHTML = html || '<div class="empty">Tidak ada buku yang cocok. Coba kata kunci lain atau pilih filter Semua.</div>';
 }
