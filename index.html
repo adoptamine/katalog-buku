@@ -4,20 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Katalog Buku - adopt.a.mine</title>
+<link rel="icon" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f2f3ef;--card:#fff;--ink:#1f2a2e;--mute:#68757a;--line:#dde1dc;--acc:#1f5f5b;--accink:#fff;--thbg:#101010;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14191b;--card:#1d2427;--ink:#e9eeee;--mute:#93a2a6;--line:#2c373b;--acc:#5fb3ab;--accink:#10201f;--thbg:#3a4549;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#14191b;--card:#1d2427;--ink:#e9eeee;--mute:#93a2a6;--line:#2c373b;--acc:#5fb3ab;--accink:#10201f;--thbg:#3a4549;color-scheme:dark}
+:root{--bg:#fff;--tint:#eef3fd;--card:#fff;--ink:#12234d;--mute:#5d6c8f;--line:#d9e3f6;--acc:#2d56a8;--accink:#fff;--thbg:#101010;--font:"Nunito","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--font)}
 .wrap{max-width:960px;margin:0 auto;padding:28px 16px 48px}
-h1{font:700 2rem/1.15 Georgia,"Iowan Old Style",serif;margin:0 0 6px}
-h2{font:700 1.35rem/1.2 Georgia,"Iowan Old Style",serif;margin:0 0 4px}
+h1{font:800 clamp(1.35rem,4.6vw,2rem)/1.15 var(--font);margin:0 0 6px;color:var(--acc)}
+.hero{display:flex;align-items:center;gap:16px;background:var(--tint);border-radius:16px;padding:18px;margin-bottom:18px}
+.logo{width:72px;height:72px;flex:none;border-radius:50%}
+.hero .sub{margin:0}
+h2{font:700 1.35rem/1.2 var(--font);margin:0 0 4px}
 .sub{color:var(--mute);margin:0 0 20px;max-width:56ch}
 .hint{color:var(--mute);font-size:.9rem;margin:0 0 14px}
 .sec{margin-top:30px}
-input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit}
+input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit}
 .bar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
 .chips{display:flex;gap:6px}
 .chip{padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
@@ -27,11 +32,11 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
 .cat{display:flex;align-items:center;gap:12px;text-align:left;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
 .cat[aria-pressed=true]{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc)}
-.ico{position:relative;flex:none;width:52px;height:52px;border-radius:6px;overflow:hidden;display:grid;place-items:center;color:#fff;font:700 1rem Georgia,"Iowan Old Style",serif}
+.ico{position:relative;flex:none;width:52px;height:52px;border-radius:6px;overflow:hidden;display:grid;place-items:center;color:#fff;font:700 1rem var(--font)}
 .ico img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .ico.ok span{display:none}
 .ico.ok img{background:var(--card)}
-.ct b{display:block;font:700 1rem/1.25 Georgia,"Iowan Old Style",serif}
+.ct b{display:block;font:700 1rem/1.25 var(--font)}
 .ct small{color:var(--mute);font-size:.82rem}
 .count{color:var(--mute);font-size:.9rem;margin:8px 0 16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:18px}
@@ -39,17 +44,17 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 .cover{position:relative;aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:flex-end;padding:14px 12px 14px 26px;color:#fff;overflow:hidden}
 .cover::before{content:"";position:absolute;inset:0 auto 0 0;width:14px;background:rgba(0,0,0,.28);box-shadow:inset -2px 0 0 rgba(255,255,255,.14)}
 .cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.cover b{font:700 1.05rem/1.2 Georgia,"Iowan Old Style",serif}
-.cover i{font:.8rem/1.3 system-ui,sans-serif;opacity:.85;margin-top:6px;font-style:normal}
+.cover b{font:700 1.05rem/1.2 var(--font)}
+.cover i{font:.8rem/1.3 var(--font);opacity:.85;margin-top:6px;font-style:normal}
 .has-img .cover::before,.has-img .cover b,.has-img .cover i{display:none}
 .sold .cover{filter:grayscale(.85) brightness(.8)}
-.stamp{position:absolute;z-index:2;top:34%;left:50%;transform:translate(-50%,-50%) rotate(-12deg);border:3px solid #fff;color:#fff;padding:4px 12px;font:700 1.1rem Georgia,serif;border-radius:4px;background:rgba(162,59,59,.88)}
+.stamp{position:absolute;z-index:2;top:34%;left:50%;transform:translate(-50%,-50%) rotate(-12deg);border:3px solid #fff;color:#fff;padding:4px 12px;font:700 1.1rem var(--font);border-radius:4px;background:rgba(162,59,59,.88)}
 .info{padding:12px;display:flex;flex-direction:column;gap:10px;flex:1}
 .meta{display:none}
 .has-img .meta{display:block}
-.meta .t{font:700 .95rem/1.25 Georgia,"Iowan Old Style",serif}
+.meta .t{font:700 .95rem/1.25 var(--font)}
 .meta .a{color:var(--mute);font-size:.82rem}
-.price{font-weight:700}
+.price{font-weight:800;color:var(--acc)}
 .sold .price{color:var(--mute);text-decoration:line-through}
 .kode{color:var(--mute);font-size:.8rem;line-height:1.35}
 .acts{margin-top:auto;display:flex;gap:8px}
