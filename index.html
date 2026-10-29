@@ -340,8 +340,16 @@ function render(){
   var clear = document.getElementById("clear");
   clear.hidden = !cat;
   clear.textContent = cat ? "Kategori: " + cat + "  ✕" : "";
-  document.getElementById("count").textContent = list.length + " buku";
-  var html = list.map(function(b){
+  var sig = cat + "|" + filter + "|" + q;
+  if(sig !== lastSig){page = 1; lastSig = sig}
+  var pages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+  if(page > pages) page = pages;
+  var from = (page - 1) * PER_PAGE, pageList = list.slice(from, from + PER_PAGE);
+  document.getElementById("count").textContent = list.length > PER_PAGE
+    ? "Menampilkan " + (from + 1) + "–" + (from + pageList.length) + " dari " + list.length + " buku"
+    : list.length + " buku";
+  renderPager(pages);
+  var html = pageList.map(function(b){
     var sold = b[4] === "sold", color = colorOf(catOf(b));
     var msg = "Halo kak, aku mau beli buku “" + b[1] + "” (" + b[0] + ")";
     var wa = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
