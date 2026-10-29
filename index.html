@@ -392,14 +392,14 @@ function render(){
     var msg = "Halo kak, aku mau beli buku “" + b[1] + "” (" + b[0] + ")";
     var wa = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
     var th = "https://www.threads.com/@" + THREADS_USER;
-    var sp = shopeeOf(b) || SHOPEE_SHOP;
+    var sp = shopeeOf(b);
     var acts = sold
       ? '<span class="done">Sold</span>'
       : '<div class="acts">' +
           '<a class="act wa" href="' + esc(wa) + '" target="_blank" rel="noopener" aria-label="Beli lewat WhatsApp" title="WhatsApp">' + ICON_WA + '</a>' +
           '<a class="act th" href="' + esc(th) + '" target="_blank" rel="noopener" data-msg="' + esc(msg) + '" aria-label="Beli lewat DM Threads" title="DM Threads">' + ICON_TH + '</a>' +
-          '<a class="act sp" href="' + esc(sp) + '" target="_blank" rel="noopener" aria-label="Beli lewat Shopee" title="Shopee">' + ICON_SP + '</a>' +
-        '</div><div class="note">Shopee ' + rp(Math.round(b[3] * SHOPEE_MARKUP)) + ' (+10% admin)</div>';
+          (sp ? '<a class="act sp" href="' + esc(sp) + '" target="_blank" rel="noopener" aria-label="Beli lewat Shopee" title="Shopee">' + ICON_SP + '</a>' : '') +
+        '</div>' + (sp ? '<div class="note">Shopee ' + rp(Math.round(b[3] * SHOPEE_MARKUP)) + ' (+10% admin)</div>' : '');
     return '<article class="book' + (sold ? " sold" : "") + '">' +
       '<div class="cover" data-k="' + esc(b[0]) + '" tabindex="0" role="button" aria-label="Lihat foto dan detail ' + esc(b[1]) + '" style="background:' + color + '">' +
       imgTag("images/buku/" + encodeURIComponent(b[0].toLowerCase()), ON_BOOK) +
@@ -488,12 +488,12 @@ function modalActs(b){
   var msg = "Halo kak, aku mau beli buku “" + b[1] + "” (" + b[0] + ")";
   var wa = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
   var th = "https://www.threads.com/@" + THREADS_USER;
-  var sp = shopeeOf(b) || SHOPEE_SHOP;
+  var sp = shopeeOf(b);
   return '<div class="acts">' +
     '<a class="act wa" href="' + esc(wa) + '" target="_blank" rel="noopener" aria-label="Beli lewat WhatsApp" title="WhatsApp">' + ICON_WA + '</a>' +
     '<a class="act th" href="' + esc(th) + '" target="_blank" rel="noopener" data-msg="' + esc(msg) + '" aria-label="Beli lewat DM Threads" title="DM Threads">' + ICON_TH + '</a>' +
-    '<a class="act sp" href="' + esc(sp) + '" target="_blank" rel="noopener" aria-label="Beli lewat Shopee" title="Shopee">' + ICON_SP + '</a>' +
-    '</div><div class="note">Shopee ' + rp(Math.round(b[3] * SHOPEE_MARKUP)) + ' (+10% admin)</div>';
+    (sp ? '<a class="act sp" href="' + esc(sp) + '" target="_blank" rel="noopener" aria-label="Beli lewat Shopee" title="Shopee">' + ICON_SP + '</a>' : '') +
+    '</div>' + (sp ? '<div class="note">Shopee ' + rp(Math.round(b[3] * SHOPEE_MARKUP)) + ' (+10% admin)</div>' : '');
 }
 function openModal(kode){
   var b = BOOKS.filter(function(x){return x[0] === kode})[0];
