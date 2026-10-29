@@ -605,6 +605,44 @@ function syncHash(){
 }
 window.addEventListener("hashchange", syncHash);
 syncHash();
+// ===== STATISTIK EVENT (GoatCounter) =====
+// Mencatat: buka pop up, klik WhatsApp/Threads/Shopee, salin link, pilih kategori, dan kunjungan dari link buku.
+function track(name, title, tries){
+  tries = tries || 0;
+  if(window.goatcounter && window.goatcounter.count){
+    try{window.goatcounter.count({path: name, title: title || name, event: true})}catch(err){}
+  } else if(tries < 20){
+    setTimeout(function(){track(name, title, tries + 1)}, 500);
+  }
+}
+function trackBook(aksi, kode){
+  var b = BOOKS.filter(function(x){return x[0] === kode})[0];
+  if(!b) return;
+  track(aksi + "-" + kode.toLowerCase(), aksi + ": " + b[1] + " (" + b[0] + ")");
+}
+document.addEventListener("click", function(e){
+  var a = e.target.closest(".act, .copylink, .cover, .cat");
+  if(!a) return;
+  var card = a.closest(".book");
+  var kode = a.closest("#modal") ? curKode : (card ? card.querySelector(".cover").getAttribute("data-k") : "");
+  if(a.classList.contains("act")){
+    var aksi = a.classList.contains("wa") ? "wa" : a.classList.contains("th") ? "threads" : a.classList.contains("sp") ? "shopee" : "";
+    if(aksi && kode) trackBook(aksi, kode);
+  } else if(a.classList.contains("copylink")){
+    if(kode) trackBook("salin-link", kode);
+  } else if(a.classList.contains("cover")){
+    trackBook("buka", a.getAttribute("data-k"));
+  } else if(a.classList.contains("cat")){
+    var c = a.getAttribute("data-cat");
+    track("kategori-" + slug(c), "Kategori: " + c);
+  }
+});
+(function(){
+  var k = "";
+  try{k = decodeURIComponent(location.hash.slice(1)).toLowerCase()}catch(err){}
+  var b = k ? BOOKS.filter(function(x){return x[0].toLowerCase() === k})[0] : null;
+  if(b) trackBook("link", b[0]);
+})();
 </script>
 <script data-goatcounter="https://adoptamine.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
