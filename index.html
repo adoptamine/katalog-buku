@@ -98,6 +98,7 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 .modal[hidden],.mfall[hidden],.mload[hidden],.mnav[hidden],.mcount[hidden],.mslide img[hidden]{display:none}
 #toast{z-index:60}
 @media (max-width:640px){.mbox{grid-template-columns:1fr}.mslide{aspect-ratio:4/5}}
+.copylink{align-self:flex-start;padding:8px 14px;border:1px dashed var(--acc);border-radius:10px;background:transparent;color:var(--acc);font:inherit;font-weight:700;cursor:pointer}
 </style>
 </head>
 <body>
@@ -555,6 +556,39 @@ document.getElementById("minfo").addEventListener("click", function(e){
     navigator.clipboard.writeText(m).then(function(){toast("Pesan disalin. Tempel di DM Threads.")}, function(){toast("Sebutkan judul dan kode buku di DM ya.")});
   }catch(err){toast("Sebutkan judul dan kode buku di DM ya.")}
 });
+// ===== LINK PER BUKU (contoh: alamat-katalog/#b-011) =====
+var pushed = false, curKode = "";
+function setHash(kode){
+  curKode = kode;
+  var h = "#" + kode.toLowerCase();
+  if(location.hash.toLowerCase() === h) return;
+  history.pushState(null, "", h); pushed = true;
+}
+function clearHash(){
+  curKode = "";
+  if(!location.hash){pushed = false; return}
+  if(pushed){pushed = false; history.back()}
+  else history.replaceState(null, "", location.pathname + location.search);
+}
+function addCopyBtn(){
+  document.getElementById("minfo").insertAdjacentHTML("beforeend", '<button class="copylink" id="mcopy">Salin link buku ini</button>');
+}
+document.getElementById("minfo").addEventListener("click", function(e){
+  if(!e.target.closest(".copylink")) return;
+  var url = location.href.split("#")[0] + "#" + curKode.toLowerCase();
+  try{
+    navigator.clipboard.writeText(url).then(function(){toast("Link buku disalin.")}, function(){toast("Salin dari address bar ya.")});
+  }catch(err){toast("Salin dari address bar ya.")}
+});
+function syncHash(){
+  var k = "";
+  try{k = decodeURIComponent(location.hash.slice(1)).toLowerCase()}catch(err){}
+  if(!k){if(!modal.hidden) closeModal(); return}
+  var b = BOOKS.filter(function(x){return x[0].toLowerCase() === k})[0];
+  if(b && (modal.hidden || curKode !== b[0])) openModal(b[0]);
+}
+window.addEventListener("hashchange", syncHash);
+syncHash();
 </script>
 </body>
 </html>
