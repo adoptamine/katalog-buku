@@ -515,10 +515,11 @@ function openModal(kode){
   modal.hidden = false;
   document.body.style.overflow = "hidden";
   document.getElementById("mclose").focus();
+    setHash(b[0]); addCopyBtn();
   loadSlides(b, mToken);
 }
 function closeModal(){
-  modal.hidden = true; mToken++;
+  modal.hidden = true; mToken++; clearHash();
   document.body.style.overflow = "";
   if(lastFocus && lastFocus.focus) lastFocus.focus();
 }
