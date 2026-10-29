@@ -70,6 +70,11 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 .foot{margin-top:32px;color:var(--mute);font-size:.88rem}
 #toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;text-align:center}
 #toast.on{opacity:1}
+.pager{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;margin-top:22px}
+.pg{min-width:40px;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.pg.on{background:var(--acc);color:var(--accink);border-color:var(--acc);font-weight:700}
+.pg:disabled{opacity:.4;cursor:default}
+.pgdot{color:var(--mute);padding:0 4px}
 </style>
 </head>
 <body>
@@ -101,6 +106,7 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
     </div>
     <div class="count" id="count"></div>
     <div class="grid" id="grid"></div>
+    <div class="pager" id="pager"></div>
   </section>
 
   <p class="foot">Stok diperbarui berkala. Harga di Shopee sudah ditambah 10% biaya admin Shopee. Buku yang sudah terjual tetap ditampilkan sebagai referensi.</p>
@@ -302,6 +308,28 @@ function renderCats(){
       '<span class="ct"><b>' + esc(c.name) + '</b><small>' + c.r + ' tersedia dari ' + c.n + '</small></span></button>';
   }).join("");
 }
+// ===== PAGING =====
+var PER_PAGE = 20, page = 1, lastSig = "";
+function renderPager(pages){
+  var el = document.getElementById("pager");
+  if(pages < 2){el.innerHTML = ""; return}
+  var nums = [];
+  for(var i = 1; i <= pages; i++){
+    if(i === 1 || i === pages || Math.abs(i - page) <= 1) nums.push(i);
+    else if(nums[nums.length - 1] !== "…") nums.push("…");
+  }
+  el.innerHTML = '<button class="pg" data-p="' + (page - 1) + '"' + (page === 1 ? " disabled" : "") + ' aria-label="Halaman sebelumnya">‹</button>' +
+    nums.map(function(n){
+      return n === "…" ? '<span class="pgdot">…</span>'
+        : '<button class="pg' + (n === page ? " on" : "") + '" data-p="' + n + '"' + (n === page ? ' aria-current="page"' : "") + '>' + n + '</button>';
+    }).join("") +
+    '<button class="pg" data-p="' + (page + 1) + '"' + (page === pages ? " disabled" : "") + ' aria-label="Halaman berikutnya">›</button>';
+}
+document.getElementById("pager").addEventListener("click", function(e){
+  var b = e.target.closest(".pg"); if(!b || b.disabled) return;
+  page = +b.getAttribute("data-p");
+  render(); toList();
+});
 function render(){
   var q = query.trim().toLowerCase();
   var list = BOOKS.filter(function(b){
