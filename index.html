@@ -160,6 +160,10 @@ var THREADS_USER = "adopt.a.mine";
 var SHOPEE_SHOP = "https://shopee.co.id/shop/24761013";
 // ===== pengali harga Shopee (1.1 = harga + 10% admin) =====
 var SHOPEE_MARKUP = 1.1;
+// ===== DATA DARI GOOGLE SHEETS (opsional) =====
+// Tempel link CSV dari Google Sheets (File > Share > Publish to web > CSV) di antara tanda kutip.
+// Kalau dikosongkan, katalog memakai daftar BOOKS yang ada di file ini.
+var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_jjttJbEDsNQCJOcDTMZt_YPhvgGVCk_kIe-xa3Ikwevg5pTTJEOCrwBlet7Xxu4O6B0Zz0cMYN_Z/pub?gid=917715652&single=true&output=csv";
 // ===== urutan kategori (opsional) =====
 // Isi nama kategori sesuai urutan yang kamu mau, contoh: ["Teenlit","CTM","Rare Finds"]
 // Kategori yang tidak ditulis di sini tampil setelahnya, sesuai urutan kemunculan di daftar buku.
@@ -465,8 +469,7 @@ document.getElementById("grid").addEventListener("click", function(e){
     navigator.clipboard.writeText(m).then(function(){toast("Pesan disalin. Tempel di DM Threads.")}, function(){toast("Sebutkan judul dan kode buku di DM ya.")});
   }catch(err){toast("Sebutkan judul dan kode buku di DM ya.")}
 });
-renderCats();
-render();
+loadBooks();
 // ===== POP UP FOTO BUKU =====
 // Foto pertama: images/buku/b-011.jpg (atau .jpeg). Foto tambahan: b-011-2.jpg, b-011-3.jpg, dst (harus berurutan).
 var MAX_PHOTOS = 8;
@@ -650,6 +653,69 @@ document.addEventListener("click", function(e){
   var b = k ? BOOKS.filter(function(x){return x[0].toLowerCase() === k})[0] : null;
   if(b) trackBook("link", b[0]);
 })();
+// ===== DATA DARI GOOGLE SHEETS =====
+// Alamat CSV diisi di bagian pengaturan atas (SHEET_CSV). Kalau kosong, katalog memakai daftar BOOKS di file ini.
+function parseCSV(t){
+  var rows = [], row = [], f = "", q = false, c;
+  t = String(t).replace(/^\uFEFF/, "");
+  for(var i = 0; i < t.length; i++){
+    c = t.charAt(i);
+    if(q){
+      if(c === '"'){if(t.charAt(i + 1) === '"'){f += '"'; i++} else q = false}
+      else f += c;
+    } else if(c === '"') q = true;
+    else if(c === ","){row.push(f); f = ""}
+    else if(c === "\n"){row.push(f); rows.push(row); row = []; f = ""}
+    else if(c !== "\r") f += c;
+  }
+  if(f !== "" || row.length){row.push(f); rows.push(row)}
+  return rows;
+}
+function rowsToBooks(rows){
+  if(!rows.length) return null;
+  var head = rows[0].map(function(h){return String(h).trim().toLowerCase()});
+  function col(names){
+    for(var i = 0; i < names.length; i++){var k = head.indexOf(names[i]); if(k > -1) return k}
+    return -1;
+  }
+  var iK = col(["kode"]), iJ = col(["judul","judul buku"]), iP = col(["penulis","author"]), iH = col(["harga","harga listing"]),
+      iS = col(["status"]), iC = col(["kategori"]), iB = col(["bahasa"]), iL = col(["link_shopee","link shopee","link"]);
+  if(iK < 0 || iJ < 0 || iH < 0 || iS < 0) return null;
+  var get = function(r, i){return i > -1 ? String(r[i] || "").trim() : ""};
+  var out = [];
+  rows.slice(1).forEach(function(r){
+    var kode = get(r, iK);
+    if(!kode) return;
+    var harga = parseInt(get(r, iH).replace(/[^0-9]/g, ""), 10) || 0;
+    var row = [kode, get(r, iJ), get(r, iP), harga, /sold|terjual/i.test(get(r, iS)) ? "sold" : "ready", get(r, iC), get(r, iB)];
+    var link = get(r, iL).split("?")[0];
+    if(/^https?:/i.test(link)) row.push(link);
+    out.push(row);
+  });
+  return out.length ? out : null;
+}
+function loadBooks(){
+  if(!SHEET_CSV){renderCats(); render(); return}
+  var rendered = false;
+  document.getElementById("cats").innerHTML = "";
+  document.getElementById("grid").innerHTML = '<div class="empty">Memuat daftar buku…</div>';
+  function apply(list){
+    if(list){BOOKS = list; CATS = categories()}
+    renderCats(); render(); rendered = true;
+    if(list) syncHash();
+  }
+  setTimeout(function(){if(!rendered) apply(null)}, 4000);
+  fetch(SHEET_CSV).then(function(r){
+    if(!r.ok) throw new Error("gagal");
+    return r.text();
+  }).then(function(t){
+    var list = rowsToBooks(parseCSV(t));
+    if(!list && window.console) console.warn("Data Google Sheets kosong atau judul kolom tidak cocok.");
+    if(list || !rendered) apply(list);
+  }).catch(function(){
+    if(!rendered) apply(null);
+  });
+}
 </script>
 <script data-goatcounter="https://adoptamine.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
