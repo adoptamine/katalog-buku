@@ -77,10 +77,10 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 .pg:disabled{opacity:.4;cursor:default}
 .pgdot{color:var(--mute);padding:0 4px}
 .cover{cursor:pointer}
-.modal{position:fixed;inset:0;z-index:50;background:rgba(18,35,77,.55);display:flex;align-items:center;justify-content:center;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px))}
-.mbox{position:relative;background:var(--card);border-radius:16px;max-width:780px;width:100%;max-height:100%;overflow:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(18,35,77,.55);display:flex;overflow-y:auto;overscroll-behavior:contain;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px))}
+.mbox{position:relative;margin:auto;background:var(--card);border-radius:16px;max-width:780px;width:100%;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 .mslide{position:relative;aspect-ratio:3/4;background:var(--tint);overflow:hidden;touch-action:pan-y}
-.mslide img{display:block;width:100%;height:100%;object-fit:contain}
+.mslide img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .mfall{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;color:#fff}
 .mfall b{font:700 1.3rem/1.2 var(--font)}
 .mfall i{font-style:normal;opacity:.85;margin-top:6px}
@@ -97,7 +97,7 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 .mprice.sold{color:var(--mute);text-decoration:line-through}
 .modal[hidden],.mfall[hidden],.mload[hidden],.mnav[hidden],.mcount[hidden],.mslide img[hidden]{display:none}
 #toast{z-index:60}
-@media (max-width:640px){.mbox{grid-template-columns:1fr}.mslide{aspect-ratio:4/5}}
+@media (max-width:640px){.mbox{grid-template-columns:1fr}.mslide{aspect-ratio:auto;height:55vh;height:55svh;max-height:480px}}
 .copylink{align-self:flex-start;padding:8px 14px;border:1px dashed var(--acc);border-radius:10px;background:transparent;color:var(--acc);font:inherit;font-weight:700;cursor:pointer}
 </style>
 </head>
