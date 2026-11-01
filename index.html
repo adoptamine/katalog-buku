@@ -374,7 +374,9 @@ function renderCats(){
 }
 // ===== PAGING =====
 var PER_PAGE = 20, page = 1, lastSig = "";
+(function(){var m = location.search.match(/[?&]hal=(\d+)/); if(m){page = Math.max(1, parseInt(m[1], 10) || 1); lastSig = "|all|"}})();
 function renderPager(pages){
+  try{history.replaceState(null, "", (page > 1 ? "?hal=" + page : location.pathname) + location.hash)}catch(err){}
   var el = document.getElementById("pager");
   if(pages < 2){el.innerHTML = ""; return}
   var nums = [];
