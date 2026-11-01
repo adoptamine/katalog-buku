@@ -374,9 +374,27 @@ function renderCats(){
 }
 // ===== PAGING =====
 var PER_PAGE = 20, page = 1, lastSig = "";
-(function(){var m = location.search.match(/[?&]hal=(\d+)/); if(m){page = Math.max(1, parseInt(m[1], 10) || 1); lastSig = "|all|"}})();
+(function(){
+  var p = new URLSearchParams(location.search);
+  if(p.get("kat")) cat = p.get("kat");
+  if(p.get("cari")) query = p.get("cari");
+  if(["ready","sold"].indexOf(p.get("status")) > -1) filter = p.get("status");
+  var h = parseInt(p.get("hal"), 10);
+  if(h > 1) page = h;
+  lastSig = cat + "|" + filter + "|" + query.trim().toLowerCase();
+  document.getElementById("q").value = query;
+  [].forEach.call(document.querySelectorAll(".chips .chip"), function(c){c.setAttribute("aria-pressed", c.getAttribute("data-f") === filter)});
+})();
 function renderPager(pages){
-  try{history.replaceState(null, "", (page > 1 ? "?hal=" + page : location.pathname) + location.hash)}catch(err){}
+    try{
+    var p = new URLSearchParams();
+    if(cat) p.set("kat", cat);
+    if(query.trim()) p.set("cari", query.trim());
+    if(filter !== "all") p.set("status", filter);
+    if(page > 1) p.set("hal", page);
+    var qs = p.toString();
+    history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + location.hash);
+  }catch(err){}
   var el = document.getElementById("pager");
   if(pages < 2){el.innerHTML = ""; return}
   var nums = [];
