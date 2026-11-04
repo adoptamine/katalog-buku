@@ -11,7 +11,7 @@ var b=document.getElementById("shb"),n=document.getElementById("shn");
 b.addEventListener("click",function(){var o=n.classList.toggle("on");b.setAttribute("aria-expanded",o)});
 function foot(){
 document.body.insertAdjacentHTML("beforeend",
-'<footer class="sh-foot"><div class="sh-bar">www.rumahhobipamulang.com</div><div class="sh-links"><a href="https://wa.me/6285791944282" target="_blank" rel="noopener">WhatsApp</a><a href="https://www.threads.com/@adopt.a.mine" target="_blank" rel="noopener">Threads</a><a href="https://shopee.co.id/shop/24761013" target="_blank" rel="noopener">Shopee</a></div></footer>');
+'<footer class="sh-foot"><div class="sh-links"><a href="https://wa.me/6285791944282" target="_blank" rel="noopener">WhatsApp</a><a href="https://www.threads.com/@adopt.a.mine" target="_blank" rel="noopener">Threads</a><a href="https://shopee.co.id/shop/24761013" target="_blank" rel="noopener">Shopee</a></div></footer>');
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",foot);else foot();
 })();
