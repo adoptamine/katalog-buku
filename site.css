@@ -74,3 +74,7 @@ body.sh-crafts .sh-ib b{font-size:.8rem;letter-spacing:.08em;text-transform:uppe
 body.sh-crafts .sh-wa{background:#fff;color:var(--sh-navy);border:1.5px solid var(--sh-gold);width:100%}
 body.sh-crafts .sh-wa:hover{background:var(--sh-gold)}
 @media(prefers-reduced-motion:reduce){body.sh-crafts .sh-item{transition:none}body.sh-crafts .sh-item:hover{transform:none}}
+html:root{--bg:#fff6df;--card:#fff;--ink:#1c2b7a;--acc:#1c2b7a;--tint:#fdebc4;--line:#e8d9b5;--mute:#5a5f7a}
+body h1,body h2,body .minfo h3{font-family:var(--sh-serif);font-weight:400}
+body .hero{background:#fff;border:2px solid var(--sh-navy);border-radius:14px}
+body .book,body .cat{border-color:var(--line);border-radius:12px}
