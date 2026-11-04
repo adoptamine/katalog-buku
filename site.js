@@ -1,6 +1,6 @@
 (function(){
 var P=location.pathname.replace(/index\.html$/,"");
-var M=[["Beranda","/"],["Buku","/buku/"],["Crafts","/crafts/"],["Preloved Things","/preloved/"]];
+var M=[["Beranda","/"],["Buku","/buku/"],["Handcrafts","/handcrafts/"],["Toys &amp; Philately","/toys/"],["Preloved Things","/preloved/"]];
 function on(h){return h==="/"?P==="/":P.indexOf(h)===0}
 var links=M.map(function(m){return '<a href="'+m[1]+'"'+(on(m[1])?' aria-current="page"':'')+'>'+m[0]+'</a>'}).join("");
 document.body.insertAdjacentHTML("afterbegin",
