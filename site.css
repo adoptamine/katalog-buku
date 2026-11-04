@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;600;700;800&display=swap");
-:root{--sh-navy:#1c2b7a;--sh-red:#e0483f;--sh-cream:#fff6df;--sh-gold:#f0b24a;--sh-mute:#5a5f7a;--sh-font:"Nunito","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;--sh-serif:"DM Serif Display",Georgia,"Times New Roman",serif;--bg:#fff6df;--card:#fff;--ink:#1c2b7a;--acc:#1c2b7a;--tint:#fdebc4;--line:#e8d9b5;--mute:#5a5f7a}
+:root{--sh-navy:#1c2b7a;--sh-red:#e0483f;--sh-cream:#fff6df;--sh-gold:#f0b24a;--sh-mute:#5a5f7a;--sh-font:"Nunito","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;--sh-serif:"Nunito","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;--bg:#fff6df;--card:#fff;--ink:#1c2b7a;--acc:#1c2b7a;--tint:#fdebc4;--line:#e8d9b5;--mute:#5a5f7a}
 h1,h2,.minfo h3{font-family:var(--sh-serif);font-weight:400}
 .sh-head,.sh-foot,.sh-main{font-family:var(--sh-font)}
 .sh-head{position:sticky;top:0;z-index:40;background:var(--sh-cream);border-bottom:2px solid var(--sh-gold)}
@@ -78,3 +78,4 @@ html:root{--bg:#fff6df;--card:#fff;--ink:#1c2b7a;--acc:#1c2b7a;--tint:#fdebc4;--
 body h1,body h2,body .minfo h3{font-family:var(--sh-serif);font-weight:400}
 body .hero{background:#fff;border:2px solid var(--sh-navy);border-radius:14px}
 body .book,body .cat{border-color:var(--line);border-radius:12px}
+h1,h2,.minfo h3,.sh-brand,.sh-main h1{font-weight:800}
