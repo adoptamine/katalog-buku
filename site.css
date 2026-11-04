@@ -94,3 +94,20 @@ body h1,body h2,body .minfo h3{font-family:var(--sh-serif);font-weight:400}
 body .hero{background:#fff;border:2px solid var(--sh-navy);border-radius:14px}
 body .book,body .cat{border-color:var(--line);border-radius:12px}
 h1,h2,.minfo h3,.sh-brand,.sh-main h1{font-weight:800}
+.sh-banner{aspect-ratio:auto;min-height:120px}
+.sh-banner img{position:static;display:block;width:100%;height:auto;max-height:420px;object-fit:cover}
+.sh-banner .sh-bt{position:absolute;inset:0;display:grid;place-content:center}
+@media(max-width:600px){
+.sh-main{padding:20px 12px 8px}
+.sh-main h1{font-size:1.7rem}
+.sh-banner{margin-bottom:18px;border-radius:10px}
+.sh-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+.sh-ib{padding:8px}
+.sh-ib b{font-size:.72rem}
+.sh-wa,.sh-sold{padding:8px;font-size:.85rem}
+.sh-title{margin:4px 0 14px;font-size:.85rem}
+.sh-hero img{width:88px;height:88px}
+.sh-cards{grid-template-columns:repeat(2,1fr);gap:10px}
+.sh-card b{font-size:.8rem}
+body .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+}
