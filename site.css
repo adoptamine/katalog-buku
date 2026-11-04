@@ -43,3 +43,7 @@ body.sh-page{margin:0;color:var(--sh-ink);background:#fff;font:16px/1.5 var(--sh
 .mbox{border-radius:0}
 @media(max-width:520px){.sh-hero,.hero{flex-direction:column;align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){.sh-card{transition:none}.sh-card:hover{transform:none}}
+.gradient-untitled{position:relative;overflow:hidden}
+.gradient-untitled::before{content:'';position:absolute;inset:-14px;background:radial-gradient(72% 58% at 16.0% 82.0%,#EAF4FC 0%,#EAF4FC 22%,#EAF4FC00 72%),radial-gradient(56% 72% at 97.0% 3.0%,#D7003A 0%,#D7003A 22%,#D7003A00 72%),radial-gradient(78% 62% at 88.0% 84.0%,#F8F4E6 0%,#F8F4E6 22%,#F8F4E600 72%),radial-gradient(50% 44% at 10.8% 66.7%,#10248A 0%,#10248A 22%,#10248A00 72%),radial-gradient(130% 120% at 30% 20%,#F8F4E6,#F8F4E6);filter:blur(7px)}
+.gradient-untitled>*{position:relative;z-index:1}
+.gradient-untitled p{color:var(--sh-ink)}
