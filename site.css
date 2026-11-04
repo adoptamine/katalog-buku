@@ -23,7 +23,6 @@ body.sh-page{margin:0;color:var(--sh-ink);background:#fff;font:16px/1.5 var(--sh
 .sh-hero,.hero{display:flex;align-items:center;gap:24px;background:#fff;border:2px solid var(--sh-ink);border-left-width:10px;border-radius:0;padding:24px;margin-bottom:24px}
 .sh-hero img{width:120px;height:120px;flex:none}
 .sh-hero p{margin:0}
-.sh-hero h1::after,.hero h1::after{content:"";display:block;width:64px;height:5px;background:var(--sh-red);transform:rotate(-20deg);transform-origin:left;margin:18px 0 8px}
 .sh-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 .sh-card{display:block;padding:20px;border:2px solid var(--sh-ink);color:var(--sh-ink);text-decoration:none;background:#fff;transition:box-shadow .15s,transform .15s}
 .sh-card:hover{box-shadow:6px 6px 0 var(--sh-acc);transform:translate(-2px,-2px)}
