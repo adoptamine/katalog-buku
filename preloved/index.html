@@ -1,1 +1,30 @@
-
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Preloved Things</title>
+<link rel="icon" href="/images/logo-rhp.png">
+<link rel="stylesheet" href="/site.css">
+</head>
+<body class="sh-page sh-preloved">
+<script src="/site.js"></script>
+<main class="sh-main">
+  <section class="sh-banner">
+    <div class="sh-bt"><h1>Preloved Things</h1><p>Pakaian dan barang bekas pilihan dalam kondisi baik.</p></div>
+    <img src="/images/preloved/banner.png" alt="" onerror="this.remove()">
+  </section>
+  <h2 class="sh-title">New Arrivals</h2>
+  <div id="gal"></div>
+</main>
+<script>
+// Foto disimpan di folder images/preloved/ . Format tiap barang:
+// ["nama-file-foto.jpg", "Judul", harga (angka, 0 jika tanpa harga), "ready" atau "sold", "Keterangan singkat"]
+// Contoh: ["kemeja-biru.jpg", "Kemeja biru", 65000, "ready", "Ukuran M, kondisi 9/10"],
+window.GALLERY = {folder: "preloved", label: "Preloved Things", items: [
+]};
+</script>
+<script src="/gallery.js"></script>
+<script data-goatcounter="https://adoptamine.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
