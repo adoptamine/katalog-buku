@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap");
 :root{--sh-navy:#1c2b7a;--sh-red:#e0483f;--sh-cream:#fff6df;--sh-gold:#f0b24a;--sh-mute:#5a5f7a;--sh-font:"Nunito","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;--sh-serif:"Nunito","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;--bg:#fff6df;--card:#fff;--ink:#1c2b7a;--acc:#1c2b7a;--tint:#fdebc4;--line:#e8d9b5;--mute:#5a5f7a}
 h1,h2,.minfo h3{font-family:var(--sh-serif);font-weight:400}
 .sh-head,.sh-foot,.sh-main{font-family:var(--sh-font)}
