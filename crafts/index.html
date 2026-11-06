@@ -128,7 +128,7 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
   .side.open{display:block}
 }
 
-/* ===== TAMBAHAN: kartu buku gaya baru + animasi hover ===== */
+/* ===== TAMBAHAN: kartu produk gaya baru + animasi hover ===== */
 .book{--bkdark:var(--acc);background:var(--bkdark);border:1px solid var(--line);border-radius:18px;transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s;animation:bkrise .5s backwards}
 .book:nth-child(3n+2){animation-delay:.06s}
 .book:nth-child(3n+3){animation-delay:.12s}
@@ -250,9 +250,9 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 // ====== ISI 3 BARIS INI ======
 // Nomor WhatsApp: format internasional tanpa + atau spasi (contoh: 6281234567890)
 var WA = "6285791944282";
-// Username Threads tanpa tanda @ (contoh: tokobukumu)
+// Username Threads tanpa tanda @ (contoh: tokoprodukmu)
 var THREADS_USER = "adopt.a.mine";
-// Link toko Shopee, dipakai kalau sebuah buku belum punya link Shopee sendiri
+// Link toko Shopee, dipakai kalau sebuah produk belum punya link Shopee sendiri
 var SHOPEE_SHOP = "https://shopee.co.id/shop/24761013";
 // ===== pengali harga Shopee (1.1 = harga + 10% admin) =====
 var SHOPEE_MARKUP = 1.1;
@@ -262,17 +262,17 @@ var SHOPEE_MARKUP = 1.1;
 var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_jjttJbEDsNQCJOcDTMZt_YPhvgGVCk_kIe-xa3Ikwevg5pTTJEOCrwBlet7Xxu4O6B0Zz0cMYN_Z/pub?gid=1598916278&single=true&output=csv";
 // ===== urutan kategori (opsional) =====
 // Isi nama kategori sesuai urutan yang kamu mau, contoh: ["Teenlit","CTM","Rare Finds"]
-// Kategori yang tidak ditulis di sini tampil setelahnya, sesuai urutan kemunculan di daftar buku.
+// Kategori yang tidak ditulis di sini tampil setelahnya, sesuai urutan kemunculan di daftar produk.
 var CATEGORY_ORDER = [];
 // ===== FOTO (opsional) =====
-// Foto sampul buku : images/buku/<kode huruf kecil>.jpg      contoh: images/buku/b-001.jpg
+// Foto sampul produk : images/produk/<kode huruf kecil>.jpg      contoh: images/produk/b-001.jpg
 // Logo kategori    : images/kategori/<nama kategori>.png     contoh: images/kategori/ctm.png
 //   (nama kategori ditulis huruf kecil, spasi dan simbol jadi tanda hubung: "Rare Finds" jadi rare-finds)
 // Kalau fotonya belum ada, otomatis tampil blok warna seperti biasa.
-// Format: [kode, judul, penulis, harga, status, kategori, link Shopee buku ini (boleh dikosongkan)]
+// Format: [kode, judul, penulis, harga, status, kategori, link Shopee produk ini (boleh dikosongkan)]
 // status: "ready" atau "sold"
-// Kategori baru otomatis muncul di bagian Kategori begitu ada buku yang memakainya.
-// Satu buku boleh masuk beberapa kategori, pisahkan dengan |  contoh: "CTM | New Arrival!"
+// Kategori baru otomatis muncul di bagian Kategori begitu ada produk yang memakainya.
+// Satu produk boleh masuk beberapa kategori, pisahkan dengan |  contoh: "CTM | New Arrival!"
 // Warna sampul (kalau belum ada foto) mengikuti kategori pertama.
 var BOOKS = [
   // [kode, nama produk, material, harga, status, kategori, "", link shopee, kondisi, foto, varian, deskripsi]
@@ -288,7 +288,7 @@ var ON_CAT = "this.parentNode.classList.add('ok')";
 var filter = "all", query = "", cat = [], langSel = [], kondSel = [], stSel = [], pmin = null, pmax = null, toastTimer;
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function rp(n){return "Rp" + n.toLocaleString("id-ID")}
-// Satu buku boleh punya beberapa kategori: tulis dipisah tanda | , contoh "CTM | New Arrival!"
+// Satu produk boleh punya beberapa kategori: tulis dipisah tanda | , contoh "CTM | New Arrival!"
 function catsOf(b){
   var c = b[5];
   if(!c) return ["Lainnya"];
@@ -297,7 +297,7 @@ function catsOf(b){
   return a.length ? a : ["Lainnya"];
 }
 function catOf(b){return catsOf(b)[0]}
-// Isian ke-7 = bahasa, isian ke-8 = link Shopee buku (opsional). Link Shopee lama di isian ke-7 tetap terbaca.
+// Isian ke-7 = bahasa, isian ke-8 = link Shopee produk (opsional). Link Shopee lama di isian ke-7 tetap terbaca.
 function isUrl(v){return /^https?:/i.test(String(v || ""))}
 function langOf(b){return b[2] ? String(b[2]).trim() : ""}
 function shopeeOf(b){return isUrl(b[6]) ? b[6] : (isUrl(b[7]) ? b[7] : "")}
@@ -509,8 +509,8 @@ document.getElementById("grid").addEventListener("click", function(e){
   var a = e.target.closest(".th"); if(!a) return;
   var m = a.getAttribute("data-msg");
   try{
-    navigator.clipboard.writeText(m).then(function(){toast("Pesan disalin. Tempel di DM Threads.")}, function(){toast("Sebutkan judul dan kode buku di DM ya.")});
-  }catch(err){toast("Sebutkan judul dan kode buku di DM ya.")}
+    navigator.clipboard.writeText(m).then(function(){toast("Pesan disalin. Tempel di DM Threads.")}, function(){toast("Sebutkan judul dan kode produk di DM ya.")});
+  }catch(err){toast("Sebutkan judul dan kode produk di DM ya.")}
 });
 loadBooks();
 
@@ -571,8 +571,8 @@ document.getElementById("ftoggle").addEventListener("click", function(){
   var o = document.getElementById("side").classList.toggle("open");
   this.setAttribute("aria-expanded", o);
 });
-// ===== POP UP FOTO BUKU =====
-// Foto pertama: images/buku/b-011.jpg (atau .jpeg). Foto tambahan: b-011-2.jpg, b-011-3.jpg, dst (harus berurutan).
+// ===== POP UP FOTO PRODUK =====
+// Foto pertama: images/produk/b-011.jpg (atau .jpeg). Foto tambahan: b-011-2.jpg, b-011-3.jpg, dst (harus berurutan).
 var MAX_PHOTOS = 8;
 var modal = document.getElementById("modal"), slides = [], sIdx = 0, mToken = 0, lastFocus = null, okExt = "";
 function probe(base, cb){
@@ -684,8 +684,8 @@ document.getElementById("minfo").addEventListener("click", function(e){
   var a = e.target.closest(".th"); if(!a) return;
   var m = a.getAttribute("data-msg");
   try{
-    navigator.clipboard.writeText(m).then(function(){toast("Pesan disalin. Tempel di DM Threads.")}, function(){toast("Sebutkan judul dan kode buku di DM ya.")});
-  }catch(err){toast("Sebutkan judul dan kode buku di DM ya.")}
+    navigator.clipboard.writeText(m).then(function(){toast("Pesan disalin. Tempel di DM Threads.")}, function(){toast("Sebutkan judul dan kode produk di DM ya.")});
+  }catch(err){toast("Sebutkan judul dan kode produk di DM ya.")}
 });
 // ===== LINK PER BUKU (contoh: alamat-katalog/#b-011) =====
 var pushed = false, curKode = "";
@@ -702,13 +702,13 @@ function clearHash(){
   else history.replaceState(null, "", location.pathname + location.search);
 }
 function addCopyBtn(){
-  document.getElementById("minfo").insertAdjacentHTML("beforeend", '<button class="copylink" id="mcopy">Salin link buku ini</button>');
+  document.getElementById("minfo").insertAdjacentHTML("beforeend", '<button class="copylink" id="mcopy">Salin link produk ini</button>');
 }
 document.getElementById("minfo").addEventListener("click", function(e){
   if(!e.target.closest(".copylink")) return;
   var url = location.href.split("#")[0] + "#" + curKode.toLowerCase();
   try{
-    navigator.clipboard.writeText(url).then(function(){toast("Link buku disalin.")}, function(){toast("Salin dari address bar ya.")});
+    navigator.clipboard.writeText(url).then(function(){toast("Link produk disalin.")}, function(){toast("Salin dari address bar ya.")});
   }catch(err){toast("Salin dari address bar ya.")}
 });
 
@@ -729,7 +729,7 @@ function syncHash(){
 window.addEventListener("hashchange", syncHash);
 syncHash();
 // ===== STATISTIK EVENT (GoatCounter) =====
-// Mencatat: buka pop up, klik WhatsApp/Threads/Shopee, salin link, pilih kategori, dan kunjungan dari link buku.
+// Mencatat: buka pop up, klik WhatsApp/Threads/Shopee, salin link, pilih kategori, dan kunjungan dari link produk.
 function track(name, title, tries){
   tries = tries || 0;
   if(window.goatcounter && window.goatcounter.count){
@@ -791,7 +791,7 @@ function rowsToBooks(rows){
     for(var i = 0; i < names.length; i++){var k = head.indexOf(names[i]); if(k > -1) return k}
     return -1;
   }
-  var iK = col(["kode"]), iJ = col(["nama produk","judul","judul buku","nama","produk"]), iP = col(["material","bahan","penulis"]), iH = col(["harga","harga listing"]),
+  var iK = col(["kode"]), iJ = col(["nama produk","judul","judul produk","nama","produk"]), iP = col(["material","bahan","penulis"]), iH = col(["harga","harga listing"]),
       iS = col(["status"]), iC = col(["kategori"]), iB = col(["bahasa"]), iL = col(["link_shopee","link shopee","link"]), iKo = col(["kondisi"]), iF = col(["foto","gambar","foto_url"]), iV = col(["varian","variant","warna"]), iD = col(["deskripsi","keterangan","catatan"]);
   if(iK < 0 || iJ < 0 || iH < 0 || iS < 0) return null;
   var get = function(r, i){return i > -1 ? String(r[i] || "").trim() : ""};
@@ -813,7 +813,7 @@ function loadBooks(){
   if(!SHEET_CSV){renderFilters(); render(); return}
   var rendered = false;
   
-  document.getElementById("grid").innerHTML = '<div class="empty">Memuat daftar buku…</div>';
+  document.getElementById("grid").innerHTML = '<div class="empty">Memuat daftar produk…</div>';
   function apply(list){
     if(list){BOOKS = list; CATS = categories()}
     renderFilters(); render(); rendered = true;
