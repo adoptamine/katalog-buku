@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Katalog Buku - Rumah Hobi Pamulang</title>
+<link rel="icon" href="/images/logo-rhp.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff6df;--tint:#fdebc4;--card:#fff;--ink:#1c2b7a;--mute:#5a5f7a;--line:#e8d9b5;--acc:#1c2b7a;--accink:#fff;--thbg:#101010;--font:"Nunito","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--font)}
+.wrap{max-width:960px;margin:0 auto;padding:28px 16px 48px}
+h1{font:800 clamp(1.35rem,4.6vw,2rem)/1.15 var(--font);margin:0 0 6px;color:var(--acc)}
+.hero{display:flex;align-items:center;gap:16px;background:var(--tint);border-radius:16px;padding:18px;margin-bottom:18px}
+.logo{width:72px;height:72px;flex:none;border-radius:50%}
+.hero .sub{margin:0;max-width:none}
+.hero>div{flex:1;min-width:0}
+h2{font:700 1.35rem/1.2 var(--font);margin:0 0 4px}
+.sub{color:var(--mute);margin:0 0 20px;max-width:56ch}
+.hint{color:var(--mute);font-size:.9rem;margin:0 0 14px}
+.sec{margin-top:30px}
+input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
+.chips{display:flex;gap:6px}
+.chip{padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.chip[hidden]{display:none}
+.chip[aria-pressed=true]{background:var(--acc);color:var(--accink);border-color:var(--acc)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.cat{display:flex;align-items:center;gap:12px;text-align:left;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.cat[aria-pressed=true]{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc)}
+.ico{position:relative;flex:none;width:52px;height:52px;border-radius:6px;overflow:hidden;display:grid;place-items:center;color:#fff;font:700 1rem var(--font)}
+.ico img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ico.ok span{display:none}
+.ico.ok img{background:var(--card)}
+.ct b{display:block;font:700 1rem/1.25 var(--font)}
+.ct small{color:var(--mute);font-size:.82rem}
+.count{color:var(--mute);font-size:.9rem;margin:8px 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:18px}
+.book{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.cover{position:relative;aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:flex-end;padding:14px 12px 14px 26px;color:#fff;overflow:hidden}
+.cover::before{content:"";position:absolute;inset:0 auto 0 0;width:14px;background:rgba(0,0,0,.28);box-shadow:inset -2px 0 0 rgba(255,255,255,.14)}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cover b{font:700 1.05rem/1.2 var(--font)}
+.cover i{font:.8rem/1.3 var(--font);opacity:.85;margin-top:6px;font-style:normal}
+.has-img .cover::before,.has-img .cover b,.has-img .cover i{display:none}
+.sold .cover{filter:grayscale(.85) brightness(.8)}
+.stamp{position:absolute;z-index:2;top:34%;left:50%;transform:translate(-50%,-50%) rotate(-12deg);border:3px solid #fff;color:#fff;padding:4px 12px;font:700 1.1rem var(--font);border-radius:4px;background:rgba(162,59,59,.88)}
+.info{padding:12px;display:flex;flex-direction:column;gap:10px;flex:1}
+.meta{display:none}
+.has-img .meta{display:block}
+.meta .t{font:700 .95rem/1.25 var(--font)}
+.meta .a{color:var(--mute);font-size:.82rem}
+.price{font-weight:800;color:var(--acc)}
+.sold .price{color:var(--mute);text-decoration:line-through}
+.kode{color:var(--mute);font-size:.8rem;line-height:1.35}
+.lang{display:inline-block;font-size:.72rem;font-weight:700;color:var(--acc);background:var(--tint);border-radius:999px;padding:2px 9px}
+.acts{margin-top:auto;display:flex;gap:8px}
+.act{flex:1;height:42px;border-radius:10px;display:grid;place-items:center;color:#fff;text-decoration:none}
+.act svg{width:22px;height:22px;fill:currentColor}
+.wa{background:#1fa855}
+.th{background:var(--thbg)}
+.sp{background:#ee4d2d}
+.note{color:var(--mute);font-size:.76rem;line-height:1.3;margin-top:-4px}
+.done{margin-top:auto;display:block;text-align:center;padding:10px;border-radius:8px;color:var(--mute);border:1px dashed var(--line)}
+.empty{grid-column:1/-1;padding:40px 0;text-align:center;color:var(--mute)}
+.foot{margin-top:32px;color:var(--mute);font-size:.88rem}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;text-align:center}
+#toast.on{opacity:1}
+.pager{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;margin-top:22px}
+.pg{min-width:40px;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.pg.on{background:var(--acc);color:var(--accink);border-color:var(--acc);font-weight:700}
+.pg:disabled{opacity:.4;cursor:default}
+.pgdot{color:var(--mute);padding:0 4px}
+.cover{cursor:pointer}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(18,35,77,.55);display:flex;overflow-y:auto;overscroll-behavior:contain;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px))}
+.mbox{position:relative;margin:auto;background:var(--card);border-radius:16px;max-width:780px;width:100%;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.mslide{position:relative;aspect-ratio:3/4;background:var(--tint);overflow:hidden;touch-action:pan-y}
+.mslide img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.mfall{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;color:#fff}
+.mfall b{font:700 1.3rem/1.2 var(--font)}
+.mfall i{font-style:normal;opacity:.85;margin-top:6px}
+.mload{position:absolute;inset:0;display:grid;place-items:center;color:var(--mute);font-size:.9rem}
+.mnav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:var(--ink);font-size:1.4rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.mprev{left:10px}
+.mnext{right:10px}
+.mcount{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(18,35,77,.72);color:#fff;font-size:.78rem;padding:3px 10px;border-radius:999px}
+.mclose{position:absolute;top:10px;right:10px;z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.95);color:var(--ink);font-size:1.1rem;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.minfo{padding:22px 20px;display:flex;flex-direction:column;gap:10px}
+.minfo h3{font:800 1.25rem/1.25 var(--font);margin:0;padding-right:36px;color:var(--acc)}
+.ma{color:var(--mute)}
+.mprice{font-weight:800;font-size:1.3rem;color:var(--acc)}
+.mprice.sold{color:var(--mute);text-decoration:line-through}
+.modal[hidden],.mfall[hidden],.mload[hidden],.mnav[hidden],.mcount[hidden],.mslide img[hidden]{display:none}
+#toast{z-index:60}
+@media (max-width:640px){.mbox{grid-template-columns:1fr}.mslide{aspect-ratio:auto;height:55vh;height:55svh;max-height:480px}}
+.copylink{align-self:flex-start;padding:8px 14px;border:1px dashed var(--acc);border-radius:10px;background:transparent;color:var(--acc);font:inherit;font-weight:700;cursor:pointer}
+.hero{background:#fff;border:2px solid #1c2b7a;border-radius:14px}
+.book,.cat{border-color:#e8d9b5;border-radius:12px}
+
+/* ===== TAMBAHAN: sidebar filter + filter harga ===== */
+.wrap{max-width:1180px}
+.pricebar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:12px 0 0}
+.plabel{font-weight:700;color:var(--acc)}
+.prp{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:0 12px;height:42px;color:var(--mute)}
+.prp input{width:96px;border:0;outline:0;background:none;font:inherit;color:var(--ink)}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:26px;align-items:start;margin-top:24px}
+.layout .sec{margin-top:0}
+.side{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto}
+.sidehead{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.sidehead b{font:800 1.1rem var(--font);color:var(--acc)}
+.rst{background:none;border:0;color:var(--acc);font:inherit;font-size:.85rem;cursor:pointer;text-decoration:underline}
+.fg{padding:14px 0;border-bottom:1px solid var(--line)}
+.fg:last-child{border-bottom:0;padding-bottom:0}
+.fg h3{font:800 .78rem var(--font);letter-spacing:.08em;text-transform:uppercase;margin:0 0 8px;color:var(--acc)}
+.ck{display:flex;align-items:center;gap:10px;padding:5px 0;cursor:pointer;color:var(--ink);font-size:.92rem}
+.ck input{width:18px;height:18px;accent-color:var(--acc);margin:0;cursor:pointer}
+.ck .n{margin-left:auto;color:var(--mute);font-size:.78rem}
+.ftoggle{display:none;margin-top:14px}
+.grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:820px){
+  .layout{grid-template-columns:1fr}
+  .ftoggle{display:inline-block}
+  .side{display:none;position:static;max-height:none}
+  .side.open{display:block}
+}
+
+/* ===== TAMBAHAN: kartu buku gaya baru + animasi hover ===== */
+.book{--bkdark:var(--acc);background:var(--bkdark);border:1px solid var(--line);border-radius:18px;transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s;animation:bkrise .5s backwards}
+.book:nth-child(3n+2){animation-delay:.06s}
+.book:nth-child(3n+3){animation-delay:.12s}
+.book:hover,.book:focus-within{transform:translateY(-6px);box-shadow:0 18px 30px -16px rgba(28,43,122,.55)}
+.bk-top{position:relative;background:var(--tint);padding:26px 0 22px;display:grid;place-items:center}
+.bk-badge{position:absolute;top:12px;left:12px;z-index:3;background:#fff;color:#1a7f45;font:800 .74rem var(--font);border-radius:999px;padding:4px 12px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.bk-badge.is-sold{color:#a23b3b}
+.book .bk-top .cover{width:62%;aspect-ratio:3/4;padding:14px 12px 12px 22px;justify-content:space-between;border-radius:3px 9px 9px 3px;box-shadow:6px 10px 18px -6px rgba(0,0,0,.45);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.book:hover .bk-top .cover{transform:translateY(-4px) rotate(-2deg) scale(1.04);box-shadow:10px 16px 24px -8px rgba(0,0,0,.5)}
+.book .bk-top .cover::before{width:8px}
+.book .cover b{font:800 1.02rem/1.15 var(--font);text-transform:uppercase;letter-spacing:.02em}
+.book .cover i{font:700 .58rem/1.3 var(--font);letter-spacing:.08em;text-transform:uppercase;opacity:.9;margin-top:0}
+.bk-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:2px;flex:1;color:#fff}
+.bk-title{font:800 1.05rem/1.25 var(--font);margin:0;color:#fff;overflow-wrap:anywhere}
+.bk-author{font-size:.86rem;color:rgba(255,255,255,.75)}
+.bk-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0 14px}
+.bk-price{font:800 1.2rem var(--font);color:var(--tint)}
+.sold .bk-price{text-decoration:line-through;opacity:.6}
+.bk-cond{font-size:.78rem;color:rgba(255,255,255,.75);text-align:right;line-height:1.25}
+.bk-btn{margin-top:auto;width:100%;background:transparent;color:var(--tint);border:1.5px solid rgba(253,235,196,.6);border-radius:12px;padding:10px;font:800 .9rem var(--font);cursor:pointer;transition:background .2s,color .2s,transform .2s,border-color .2s}
+.book:hover .bk-btn,.bk-btn:hover{background:var(--tint);color:var(--acc);border-color:var(--tint)}
+.bk-btn:active{transform:scale(.97)}
+@keyframes bkrise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ===== TAMBAHAN: pop up detail ===== */
+.mbox{animation:mpop .25s ease-out}
+@keyframes mpop{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:none}}
+.buy{border-top:1px solid var(--line);padding-top:14px;margin-top:6px}
+.buyh{font:800 .78rem var(--font);letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px;color:var(--acc)}
+.buylist{display:grid;gap:8px}
+.buylist .act{display:flex;align-items:center;justify-content:flex-start;gap:10px;height:auto;padding:12px 16px;font-weight:800;font-size:.95rem;transition:transform .15s,filter .15s}
+.buylist .act:hover{transform:translateY(-2px);filter:brightness(1.12)}
+.buylist .act small{margin-left:auto;font-weight:700;opacity:.9;font-size:.82rem}
+.buy .note{margin-top:10px}
+.copylink{transition:background .2s,color .2s}
+.copylink:hover{background:var(--acc);color:#fff}
+@media (prefers-reduced-motion:reduce){.book,.book .cover,.bk-btn,.mbox,.buylist .act{transition:none!important;animation:none!important}.book:hover{transform:none}}
+@media (max-width:640px){.bk-body{padding:12px}.bk-meta{flex-direction:column;align-items:flex-start;gap:2px}.bk-cond{text-align:left}.bk-top{padding:22px 0 18px}.book .bk-top .cover{width:70%}}
+</style>
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+<script src="/site.js"></script>
+<div class="wrap">
+  <header class="hero gradient-untitled">
+    <div>
+      <h1>Katalog Buku</h1>
+      <p class="sub">Buku bekas dalam kondisi terawat. Ongkir ditanggung pembeli. Pilih beli lewat WhatsApp, DM Threads, atau Shopee (jika tersedia/by request), judul dan kode buku ikut terkirim.</p>
+    </div>
+  </header>
+  <input type="search" id="q" placeholder="Cari judul, penulis, atau kategori" aria-label="Cari judul, penulis, atau kategori">
+
+  <div class="pricebar">
+    <span class="plabel">Harga</span>
+    <label class="prp">Rp <input type="number" id="pmin" min="0" step="1000" placeholder="Min" aria-label="Harga minimum"></label>
+    <span class="plabel">–</span>
+    <label class="prp">Rp <input type="number" id="pmax" min="0" step="1000" placeholder="Maks" aria-label="Harga maksimum"></label>
+    <div class="chips" id="pchips">
+      <button class="chip" data-min="" data-max="50000" aria-pressed="false">&lt; 50rb</button>
+      <button class="chip" data-min="50000" data-max="100000" aria-pressed="false">50–100rb</button>
+      <button class="chip" data-min="100000" data-max="" aria-pressed="false">&gt; 100rb</button>
+    </div>
+  </div>
+
+  <button class="chip ftoggle" id="ftoggle" aria-expanded="false">☰ Filter buku</button>
+
+  <div class="layout">
+    <aside class="side" id="side" aria-label="Filter buku">
+      <div class="sidehead"><b>Filter Buku</b><button class="rst" id="reset">Reset semua</button></div>
+      <div id="filters"></div>
+    </aside>
+
+    <section class="sec" id="semua" aria-labelledby="h-semua">
+      <h2 id="h-semua">Semua buku</h2>
+      <div class="count" id="count"></div>
+      <div class="grid" id="grid"></div>
+      <div class="pager" id="pager"></div>
+    </section>
+  </div>
+
+  <p class="foot">Stok diperbarui berkala. Harga di Shopee sudah ditambah 10% biaya admin Shopee. Buku yang sudah terjual tetap ditampilkan sebagai referensi.</p>
+</div>
+<div id="modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mtitle">
+  <div class="mbox">
+    <button class="mclose" id="mclose" aria-label="Tutup">✕</button>
+    <div class="mslide" id="mslide">
+      <img id="mimg" alt="" hidden>
+      <div class="mfall" id="mfall" hidden></div>
+      <div class="mload" id="mload">Memuat foto…</div>
+      <button class="mnav mprev" id="mprev" aria-label="Foto sebelumnya" hidden>‹</button>
+      <button class="mnav mnext" id="mnext" aria-label="Foto berikutnya" hidden>›</button>
+      <div class="mcount" id="mcount" hidden></div>
+    </div>
+    <div class="minfo" id="minfo"></div>
+  </div>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+// ====== ISI 3 BARIS INI ======
+// Nomor WhatsApp: format internasional tanpa + atau spasi (contoh: 6281234567890)
+var WA = "6285791944282";
+// Username Threads tanpa tanda @ (contoh: tokobukumu)
+var THREADS_USER = "adopt.a.mine";
+// Link toko Shopee, dipakai kalau sebuah buku belum punya link Shopee sendiri
+var SHOPEE_SHOP = "https://shopee.co.id/shop/24761013";
+// ===== pengali harga Shopee (1.1 = harga + 10% admin) =====
+var SHOPEE_MARKUP = 1.1;
+// ===== DATA DARI GOOGLE SHEETS (opsional) =====
+// Tempel link CSV dari Google Sheets (File > Share > Publish to web > CSV) di antara tanda kutip.
+// Kalau dikosongkan, katalog memakai daftar BOOKS yang ada di file ini.
+var SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_jjttJbEDsNQCJOcDTMZt_YPhvgGVCk_kIe-xa3Ikwevg5pTTJEOCrwBlet7Xxu4O6B0Zz0cMYN_Z/pub?gid=917715652&single=true&output=csv";
+// ===== urutan kategori (opsional) =====
+// Isi nama kategori sesuai urutan yang kamu mau, contoh: ["Teenlit","CTM","Rare Finds"]
+// Kategori yang tidak ditulis di sini tampil setelahnya, sesuai urutan kemunculan di daftar buku.
+var CATEGORY_ORDER = ["New Arrivals", "Rare Finds", "Fantasy", "CTM", "Indonesian Authors", "Classic English", "Teenlit", "Non-Fiction", "Self Development", "Others"];
+// ===== FOTO (opsional) =====
+// Foto sampul buku : images/buku/<kode huruf kecil>.jpg      contoh: images/buku/b-001.jpg
+// Logo kategori    : images/kategori/<nama kategori>.png     contoh: images/kategori/ctm.png
+//   (nama kategori ditulis huruf kecil, spasi dan simbol jadi tanda hubung: "Rare Finds" jadi rare-finds)
+// Kalau fotonya belum ada, otomatis tampil blok warna seperti biasa.
+// Format: [kode, judul, penulis, harga, status, kategori, link Shopee buku ini (boleh dikosongkan)]
+// status: "ready" atau "sold"
+// Kategori baru otomatis muncul di bagian Kategori begitu ada buku yang memakainya.
+// Satu buku boleh masuk beberapa kategori, pisahkan dengan |  contoh: "CTM | New Arrival!"
+// Warna sampul (kalau belum ada foto) mengikuti kategori pertama.
+var BOOKS = [
+  ["B-001","Cat Stories (Kisah-Kisah Kucing)","James Herriot",35000,"sold","Non-Fiction","Indonesia"],
+  ["B-002","LOTR: The Fellowship of the Ring","J. R. R. Tolkien",75000,"sold","Fantasy","Inggris"],
+  ["B-003","LOTR: The Return of the King","J. R. R. Tolkien",75000,"sold","Fantasy","Inggris"],
+  ["B-004","The Lost Symbol","Dan Brown",75000,"sold","CTM","Inggris"],
+  ["B-005","Harry Potter and the Chamber of Secrets","J. K. Rowling",65000,"sold","Fantasy","Indonesia"],
+  ["B-006","Harry Potter and the Prisoner of Azkaban (1)","J. K. Rowling",85000,"sold","Fantasy","Indonesia"],
+  ["B-007","Harry Potter and the Prisoner of Azkaban (2)","J. K. Rowling",140000,"sold","Fantasy","Indonesia"],
+  ["B-008","Anne's House of Dreams (Rumah Impian Anne)","L.M. Montgomery",60000,"sold","Classic English","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Anne's-House-of-Dreams-(Rumah-Impian-Anne)-L.M.-Montgomery-(Terjemahan-Indonesia)-i.24761013.58018347077"],
+  ["B-009","The Lord of the Rings: Kembalinya Sang Raja","J. R. R. Tolkien",175000,"sold","Fantasy","Indonesia","https://shopee.co.id/-PRELOVED-Buku-The-Lord-of-the-Rings-Kembalinya-Sang-Raja-(The-Return-of-the-King)-J.R.R.-Tolkien-(Terjemahan-Indonesia)-i.24761013.58019074185"],
+  ["B-010","Percy Jackson and the Battle of the Labyrinth","Rick Riordan",45000,"sold","Fantasy","Indonesia"],
+  ["B-011","Chicken Soup for the Teenage Soul II","Jack Canfield",100000,"ready","Self Development","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Chicken-Soup-for-the-Teenage-Soul-II-Jack-Canfield-(Terjemahan)-i.24761013.58118280171"],
+  ["B-012","Robinson Crusoe","Daniel Defoe",60000,"ready","Classic English","Inggris","https://shopee.co.id/-PRELOVED-Robinson-Crusoe-Daniel-Defoe-Wordsworth-Classics-English)-i.24761013.57968345535"],
+  ["B-013","The Best Man","Matt Dunn",55000,"ready","Others","Indonesia","https://shopee.co.id/-PRELOVED-Buku-The-Best-Man-Matt-Dunn-Terjemahan-Indonesia)-i.24761013.57918340897"],
+  ["B-014","The Time Bike","Jane Langton",50000,"ready","Non-Fiction","Inggris","https://shopee.co.id/-PRELOVED-The-Time-Bike-Jane-Langton-(English)-i.24761013.57868339972"],
+  ["B-015","A 2nd Helping of Chicken Soup for the Soul","Jack Canfield & Mark Victor Hansen",40000,"ready","Self Development","Indonesia","https://shopee.co.id/-PRELOVED-Buku-A-2nd-Helping-of-Chicken-Soup-for-the-Soul-Jack-Canfield-Mark-Victor-Hansen-(Terjemahan-Indonesia)-i.24761013.57669022805"],
+  ["B-016","Salah Asuhan","Abdoel Moeis",55000,"ready","Indonesian Authors","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Salah-Asuhan-Abdoel-Moeis-Bahasa-Indonesia)-i.24761013.57318364221"],
+  ["B-017","The Society of S","Susan Hubbard",75000,"ready","CTM","Indonesia","https://shopee.co.id/-PRELOVED-Buku-The-Society-of-S-Susan-Hubbard-(Terjemahan-Indonesia)-i.24761013.57118356286"],
+  ["B-018","Chicken Soup for the Woman's Soul 2","Jack Canfield, dkk.",90000,"ready","Self Development","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Chicken-Soup-for-the-Woman's-Soul-2-Jack-Canfield-dkk.-(Terjemahan)-i.24761013.56768289394"],
+  ["B-019","Shiloh (Perburuan)","Phyllis Reynolds Naylor",45000,"ready","Non-Fiction","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Shiloh-Perburuan)-Phyllis-Reynolds-Naylor-Terjemahan-Indonesia)-i.24761013.56568350386"],
+  ["B-020","Nemesis","Agatha Christie",40000,"ready","CTM","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Nemesis-Agatha-Christie-Terjemahan-Indonesia)-i.24761013.56269027995"],
+  ["B-021","Armageddon Knights The Awaken","L.S. Mamusung",55000,"ready","Fantasy","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Armageddon-Knights-The-Awaken-L.S.-Mamusung-Bahasa-Indonesia)-i.24761013.55818355846"],
+  ["B-022","Mockingjay (The Hunger Games Trilogy)","Suzanne Collins",65000,"ready","Fantasy","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Mockingjay-The-Hunger-Games-Trilogy)-Suzanne-Collins-Terjemahan-Indonesia)-i.24761013.55568373673"],
+  ["B-023","Chicken Soup for the Unsinkable Soul","Jack Canfield & Mark Victor Hansen",40000,"ready","Self Development","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Chicken-Soup-for-the-Unsinkable-Soul-Jack-Canfield-Mark-Victor-Hansen-(Terjemahan-Indonesia)-i.24761013.55219022860"],
+  ["B-024","Uncle Tom's Cabin","Harriet Beecher Stowe",60000,"ready","Classic English","Inggris","https://shopee.co.id/-PRELOVED-Buku-Uncle-Tom's-Cabin-Harriet-Beecher-Stowe-English)-i.24761013.55068345809"],
+  ["B-025","Dihantui (Haunted)","R.L. Stine",22000,"ready","CTM","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Dihantui-(Haunted)-R.L.-Stine-(Terjemahan-Indonesia)-i.24761013.54819037801"],
+  ["B-026","Joey: Si Frustasi yang Beruntung","Mark Bowden",40000,"ready","Non-Fiction","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Joey-Si-Frustasi-yang-Beruntung-Mark-Bowden-Terjemahan-Indonesia)-i.24761013.54568351185"],
+  ["B-027","The Bondwoman's Narrative","Hannah Crafts",78000,"ready","Classic English","Inggris","https://shopee.co.id/-PRELOVED-Buku-The-Bondwoman's-Narrative-Hannah-Crafts-(English)-i.24761013.54418340953"],
+  ["B-028","The Jester","James Patterson & Andrew Gross",60000,"ready","CTM","Inggris","https://shopee.co.id/-PRELOVED-Buku-The-Jester-James-Patterson-Andrew-Gross-(English)-i.24761013.54368350366"],
+  ["B-029","The Voyages of Captain Cook","James Cook",60000,"ready","Classic English","Inggris","https://shopee.co.id/-PRELOVED-The-Voyages-of-Captain-Cook-James-Cook-Wordsworth-Classics-English)-i.24761013.54068340709"],
+  ["B-030","The Mark of Athena","Rick Riordan",60000,"ready","Fantasy","Indonesia","https://shopee.co.id/-PRELOVED-Buku-The-Mark-of-Athena-Rick-Riordan-Terjemahan-Indonesia)-i.24761013.53818341808"],
+  ["B-031","Pesta Menginap (Sleepovers)","Jacqueline Wilson",50000,"sold","Teenlit","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Pesta-Menginap-(Sleepovers)-Jacqueline-Wilson-(Terjemahan-Indonesia)-i.24761013.53618688148"],
+  ["B-032","Double Cross","James Patterson",90000,"ready","CTM","Inggris","https://shopee.co.id/-PRELOVED-Buku-Double-Cross-James-Patterson-English)-i.24761013.53618342118"],
+  ["B-033","Chicken Soup for the Teenage Soul III","Jack Canfield & Mark Victor Hansen",40000,"ready","Self Development","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Chicken-Soup-for-the-Teenage-Soul-III-Jack-Canfield-Mark-Victor-Hansen-(Terjemahan-Indonesia)-i.24761013.53219037625"],
+  ["B-034","Dan Damai di Bumi (Und Friede auf Erden!)","Karl May",75000,"ready","Non-Fiction","Indonesia","https://shopee.co.id/-BARU-Buku-Dan-Damai-di-Bumi-(Und-Friede-auf-Erden!)-Karl-May-(Terjemahan-Indonesia)-i.24761013.53168356704"],
+  ["B-035","Gerald's Game (Permainan Gerald)","Stephen King",45000,"ready","CTM","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Gerald's-Game-Permainan-Gerald)-Stephen-King-Terjemahan-Indonesia)-i.24761013.52818346747"],
+  ["B-036","Catatan Seorang Demonstran","Soe Hok Gie",90000,"ready","Indonesian Authors","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Catatan-Seorang-Demonstran-Soe-Hok-Gie-i.24761013.52818269895"],
+  ["B-037","Bulan Terbelah di Langit Amerika","Hanum Salsabiela Rais & Rangga Almahendra",40000,"ready","Indonesian Authors","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Bulan-Terbelah-di-Langit-Amerika-Hanum-Salsabiela-Rais-Rangga-Almahendra-Bahasa-Indonesia)-i.24761013.52569028161"],
+  ["B-038","Slow Boats to China","Gavin Young",60000,"ready","Non-Fiction","Inggris","https://shopee.co.id/-PRELOVED-Slow-Boats-to-China-Gavin-Young-(English)-i.24761013.52518345773"],
+  ["B-039","The Ghost Writer","John Harwood",75000,"ready","CTM","Indonesia","https://shopee.co.id/-PRELOVED-Buku-The-Ghost-Writer-John-Harwood-Gramedia-Terjemahan)-i.24761013.52468355278"],
+  ["B-040","Perahu Kertas (Cover Film / Movie Edition)","Dee Lestari",70000,"ready","Indonesian Authors","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Perahu-Kertas-Cover-Film-Movie-Edition)-Dee-Lestari-Bahasa-Indonesia)-i.24761013.52219022960"],
+  ["B-041","Gulliver's Travels","Jonathan Swift",60000,"ready","Classic English","Inggris","https://shopee.co.id/-PRELOVED-Gulliver's-Travels-Jonathan-Swift-Wordsworth-Classics-English)-i.24761013.52168345664"],
+  ["B-042","Minamoto no Yoritomo","Eiji Yoshikawa",55000,"ready","Non-Fiction","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Minamoto-no-Yoritomo-Eiji-Yoshikawa-Terjemahan-Indonesia)-i.24761013.51518346677"],
+  ["B-043","Justin Bieber: First Step 2 Forever (My Story)","Justin Bieber",135000,"ready","Non-Fiction","Inggris","https://shopee.co.id/-PRELOVED-Buku-Justin-Bieber-First-Step-2-Forever-My-Story)-Justin-Bieber-English)-i.24761013.50969074528"],
+  ["B-044","Chicken Soup for the New Mom's Soul","Jack Canfield & Mark Victor Hansen",40000,"ready","Self Development","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Chicken-Soup-for-the-New-Mom's-Soul-Jack-Canfield-Mark-Victor-Hansen-Terjemahan-Indonesia)-i.24761013.50919037672"],
+  ["B-045","The Chronicles of Narnia: The Voyage of The Dawn Treader Petualangan Dawn Treader","C.S. Lewis",60000,"ready","Fantasy","Indonesia","https://shopee.co.id/-PRELOVED-Buku-The-Chronicles-of-Narnia-The-Voyage-of-The-Dawn-Treader-Petualangan-Dawn-Treader-C.S.-Lewis-Terjemahan-Indonesia)-i.24761013.50668366348"],
+  ["B-046","The Sea of Trolls","Nancy Farmer",78000,"ready","Fantasy","Indonesia","https://shopee.co.id/-PRELOVED-Buku-The-Sea-of-Trolls-Nancy-Farmer-(Terjemahan-Indonesia)-i.24761013.50618369263"],
+  ["B-047","Perahu Kertas (Cover Lama / Novel Original)","Dee Lestari",70000,"ready","Indonesian Authors","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Perahu-Kertas-Cover-Lama-Novel-Original)-Dee-Lestari-Bahasa-Indonesia)-i.24761013.50569037666"],
+  ["B-048","Schweik (The Good Soldier Švejk)","Jaroslav Hašek",40000,"ready","Classic English","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Schweik-The-Good-Soldier-%C5%A0vejk)-Jaroslav-Ha%C5%A1ek-Terjemahan-Indonesia)-i.24761013.50568356741"],
+  ["B-049","Honeymoon with My Brother","Franz Wisner",78000,"ready","Non-Fiction","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Honeymoon-with-My-Brother-Franz-Wisner-(Terjemahan-Indonesia)-i.24761013.50068383478"],
+  ["B-050","Showing Mary: How Women Can Share Prayers, Wisdom, and the Blessings of God","Renita J. Weems",65000,"ready","Self Development","Inggris","https://shopee.co.id/-PRELOVED-Buku-Showing-Mary-How-Women-Can-Share-Prayers-Wisdom-and-the-Blessings-of-God-Renita-J.-Weems-(English)-i.24761013.49968376840"],
+  ["B-051","Judge & Jury","James Patterson & Andrew Gross",100000,"ready","CTM","Inggris","https://shopee.co.id/-PRELOVED-Judge-Jury-James-Patterson-Andrew-Gross-(English)-i.24761013.49518354869"],
+  ["B-052","Ping","Stuart Avery Gold",35000,"ready","Self Development","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Ping-Stuart-Avery-Gold-Terjemahan-Indonesia)-i.24761013.49468371009"],
+  ["B-053","The No. 1 Ladies' Detective Agency","Alexander McCall Smith",70000,"ready","CTM","Inggris","https://shopee.co.id/-PRELOVED-Buku-The-No.-1-Ladies'-Detective-Agency-Alexander-McCall-Smith-English)-i.24761013.49169102930"],
+  ["B-054","The Man Who Would Be King and Other Stories","Rudyard Kipling",50000,"ready","Classic English","Inggris","https://shopee.co.id/-PRELOVED-Buku-The-Man-Who-Would-Be-King-and-Other-Stories-Rudyard-Kipling-English)-i.24761013.47668385063"],
+  ["B-055","Maximum Ride","James Patterson",90000,"ready","CTM","Inggris","https://shopee.co.id/-PRELOVED-Buku-Maximum-Ride-James-Patterson-English)-i.24761013.47418371197"],
+  ["B-056","The Kill Order","James Dashner",55000,"sold","Fantasy","Inggris","https://shopee.co.id/-PRELOVED-The-Kill-Order-James-Dashner-(Maze-Runner-Prequel-English)-i.24761013.47068370845"],
+  ["B-057","Presumed Innocent (Praduga Tak Bersalah)","Scott Turow",40000,"ready","CTM","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Presumed-Innocent-Praduga-Tak-Bersalah)-Scott-Turow-Terjemahan-Indonesia)-i.24761013.47019084492"],
+  ["B-058","Chicken Soup for the Grandparent's Soul","Jack Canfield & Mark Victor Hansen",35000,"ready","Self Development","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Chicken-Soup-for-the-Grandparent's-Soul-Jack-Canfield-Mark-Victor-Hansen-(Terjemahan-Indonesia)-i.24761013.46619043045"],
+  ["B-059","Andai Mereka Bisa Bicara","James Herriot",50000,"ready","Non-Fiction","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Andai-Mereka-Bisa-Bicara-James-Herriot-Terjemahan-Indonesia)-i.24761013.46568371087"],
+  ["B-060","Before Green Gables (Prekuel Anne of Green Gables)","Budge Wilson",55000,"ready","Classic English","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Before-Green-Gables-Budge-Wilson-Prekuel-Anne-of-Green-Gables-Terjemahan-Indonesia)-i.24761013.46169099107"],
+  ["B-061","Kisah Tracy Beaker (The Story of Tracy Beaker)","Jacqueline Wilson",45000,"ready","Teenlit","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Kisah-Tracy-Beaker-The-Story-of-Tracy-Beaker)-Jacqueline-Wilson-Terjemahan-Indonesia)-i.24761013.45268722158"],
+  ["B-062","Cat Stories (Kisah-Kisah Kucing) (2)","James Herriot",65000,"ready","Non-Fiction","Indonesia"],
+  ["B-063","Bumi Manusia","Pramoedya Ananta Toer",225000,"ready","Indonesian Authors","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Bumi-Manusia-Pramoedya-Ananta-Toer-Lentera-Dipantara)-i.24761013.44768319418"],
+  ["B-064","Breaking Dawn","Stephenie Meyer",65000,"ready","Fantasy","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Breaking-Dawn-Stephenie-Meyer-Terjemahan-Indonesia)-i.24761013.44718366801"],
+  ["B-065","Chicken Soup for the Teenage Soul","Jack Canfield & Mark Victor Hansen",40000,"ready","Self Development","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Chicken-Soup-for-the-Teenage-Soul-Jack-Canfield-Mark-Victor-Hansen-Terjemahan-Indonesia)-i.24761013.44235062321"],
+  ["B-066","The Chronicles of Narnia: Pangeran Caspian (Prince Caspian)","C.S. Lewis",55000,"ready","Fantasy","Indonesia","https://shopee.co.id/-PRELOVED-Buku-The-Chronicles-of-Narnia-Pangeran-Caspian-Prince-Caspian)-C.S.-Lewis-Terjemahan-Indonesia)-i.24761013.44035071637"],
+  ["B-067","Architecture: Form, Space, and Order","Francis D. K. Ching",110000,"sold","Non-Fiction","Inggris","https://shopee.co.id/-PRELOVED-Buku-Architecture-Form-Space-and-Order-Francis-D.-K.-Ching-i.24761013.44034790128"],
+  ["B-068","The Incredible Journey","Sheila Burnford",50000,"ready","Non-Fiction","Indonesia","https://shopee.co.id/-PRELOVED-Buku-The-Incredible-Journey-Sheila-Burnford-Terjemahan-Indonesia)-i.24761013.43234750008"],
+  ["B-069","[SEALED] Chicken Soup for the Working Mom's Soul","Jack Canfield & Mark Victor Hansen",50000,"ready","Self Development","Indonesia","https://shopee.co.id/-BARU-Buku-Chicken-Soup-for-the-Working-Mom's-Soul-Jack-Canfield-Mark-Victor-Hansen-(Terjemahan-Indonesia)-i.24761013.43085062358"],
+  ["B-070","Beyonders: Chasing the Prophecy","Brandon Mull",55000,"ready","Fantasy","Indonesia","https://shopee.co.id/-PRELOVED-Buku-Beyonders-Chasing-the-Prophecy-Brandon-Mull-Terjemahan-Indonesia)-i.24761013.42384740290"],
+  ["B-071","My Perfect Sunset","Kyria",35000,"ready","Others","Indonesia","https://shopee.co.id/-PRELOVED-Buku-My-Perfect-Sunset-Kyria-Bahasa-Indonesia)-i.24761013.40835071665"],
+  ["B-072","King & Maxwell","David Baldacci",75000,"ready","CTM","Inggris","https://shopee.co.id/-PRELOVED-King-Maxwell-David-Baldacci-English)-i.24761013.40834739299"],
+  ["B-073","The Adventures of Tom Sawyer & Huckleberry Finn","Mark Twain",60000,"ready","Classic English","Inggris","https://shopee.co.id/-PRELOVED-The-Adventures-of-Tom-Sawyer-Huckleberry-Finn-Mark-Twain-English)-i.24761013.29845953670"],
+  ["B-074","Bundling Trilogy Hunger Games","Suzanne Collins",160000,"sold","Fantasy","Indonesia"],
+  ["B-075","Bundling Twilight Series","Stephenie Meyer",150000,"ready","Fantasy","Indonesia"],
+  ["B-076","Harry Potter and The Order of Phoenix","J. K. Rowling",280000,"ready","Fantasy","Indonesia"],
+  ["B-077","Harry Potter and The Deathly Hallows (Scholastic)","J. K. Rowling",200000,"ready","Fantasy","Inggris"],
+  ["B-078","Bundling Buku Pramoedya Ananta Toer","Pramoedya Ananta Toer",600000,"ready","Indonesian Authors","Indonesia"],
+  ["B-079","Divine Secrets of The Ya-Ya Sisterhood","Rebecca Wells",70000,"ready","Others","Inggris"],
+  ["B-080","The Gutsy Girl","Kate White",60000,"ready","Self Development","Inggris"],
+  ["B-081","Middle School: Bullies Broccoli","James Patterson",75000,"ready","Teenlit","Inggris"],
+  ["B-082","Why You Act The Way You Do","La Haye",50000,"ready","Self Development","Inggris"],
+  ["B-083","Jangan Membuat Masalah Kecil Menjadi Masalah Besar","Richard Carlson",40000,"ready","Self Development","Indonesia"],
+  ["B-084","Indiana Jones: Sky Pirates","Martin",45000,"ready","Fantasy","Inggris"],
+  ["B-085","A Dog's Journey","Bruce Cameron",75000,"ready","Non-Fiction","Inggris"],
+  ["B-086","The Good Luck of Right Now","Matthew Quick",65000,"ready","Non-Fiction","Inggris"],
+  ["B-087","The Death Cure","James Dashner",50000,"ready","Fantasy","Inggris"],
+  ["B-088","The Scorch Trials","James Dashner",50000,"ready","Fantasy","Inggris"],
+  ["B-089","Creepover: You Can't Come in Here","Simon Spotlight",25000,"ready","CTM","Inggris"],
+  ["B-090","The Host","Stephenie Meyer",50000,"ready","Fantasy","Inggris"],
+  ["B-091","Percy Jackson and The Sea Monsters","Rick Riordan",45000,"ready","Fantasy","Inggris"],
+  ["B-092","Beyonce: Running The World","Anna Pointer",35000,"ready","Non-Fiction","Inggris"],
+  ["B-093","Memories, Dreams and Reflections","Marianne Faithfull",30000,"ready","Non-Fiction","Inggris"],
+  ["B-094","Big Blue: IBM's Use and Abuse of Power (Hard Cover)","Richard Thomas DeLamarter",150000,"ready","Non-Fiction","Inggris"],
+  ["B-095","One Fifth Avenue","Candace Bushnell",45000,"ready","Non-Fiction","Inggris"],
+  ["B-096","Guantanamo: American Human's Diary","David Rose",30000,"ready","Non-Fiction","Inggris"],
+  ["B-097","Deception Point","Dan Brown",85000,"ready","CTM","Inggris"],
+  ["B-098","Harry Potter Goblet of Fire","J. K. Rowling",150000,"ready","Fantasy","Indonesia"],
+  ["B-099","Percy Jackson and The Olympians: The Lightning Thief","Rick Riordan",50000,"ready","Fantasy","Indonesia"],
+  ["B-100","Tunnels","Gordon & Williams",65000,"ready","Fantasy","Indonesia"],
+  ["B-101","Noughts & Crosses (Penguin)","Malorie Blackman",55000,"ready","Teenlit","Inggris"],
+  ["B-102","A View from The Bridge (Penguin)","Arthur Miller",35000,"ready","Classic English","Inggris"],
+  ["B-103","Two Weeks with The Queen (Penguin)","Morris Gleitzman",30000,"ready","Non-Fiction","Inggris"],
+  ["B-104","Eloy: Perjalanan Ajaib Anak Pedalaman Nias ke Panggung Dunia","Alberthiene Endah",35000,"ready","Non-Fiction","Indonesia"],
+  ["B-105","Honeymoon","James Patterson & Howard Roughan",100000,"ready","CTM","Inggris"],
+  ["B-106","5th Horseman","James Patterson & Maxine Paetro",125000,"ready","CTM","Inggris"],
+  ["B-107","Forrest Gump","Winston Groom",75000,"ready","Others","Indonesia"],
+  ["B-108","Poirot's Early Cases","Agatha Christie",50000,"ready","CTM","Indonesia"],
+  ["B-109","Chicken Soup for the Pet Lover's Soul","Jack Canfield, dkk.",40000,"ready","Self Development","Indonesia"],
+  ["B-110","Storm Warning (Di Ambang Neraka)","Jack Higgins",30000,"ready","CTM","Indonesia"],
+  ["B-111","The Joy Luck Club","Amy Tan",125000,"ready","Self Development","Indonesia"],
+  ["B-112","The Wrath of God","Jack Higgins",30000,"ready","CTM","Indonesia"],
+  ["B-113","Mangan Ora Mangan Kumpul","Umar Kayam",150000,"ready","Indonesian Authors","Indonesia"],
+  ["B-114","The Runaway Jury","John Grisham",50000,"ready","CTM","Indonesia"],
+  ["B-115","The Evening News","Arthur Hailey",50000,"ready","CTM","Inggris"],
+  ["B-116","Dewey: Kucing Perpustakaan Kota Kecil yang Bikin Dunia Jatuh Cinta","Vicki Myron & Bret Witter",50000,"ready","Non-Fiction","Inggris"],
+  ["B-117","The Second Time Around","Mary Higgins Clark",50000,"ready","Others","Indonesia"],
+  ["B-118","Kasus-kasus Terakhir Miss Marple","Agatha Christie",40000,"ready","CTM","Indonesia"],
+  ["B-119","The Twilight Saga: New Moon","Stephenie Meyer",100000,"ready","Fantasy","Inggris"],
+  ["B-120","The Kill Order (2)","James Dashner",55000,"ready","Fantasy","Inggris"],
+  ["B-121","Twilight","Stephenie Meyer",75000,"ready","Fantasy","Inggris"],
+  ["B-122","The Twilight Saga: Eclipse","Stephenie Meyer",80000,"ready","Fantasy","Indonesia"],
+  ["B-123","Men Are from Mars, Women Are from Venus (HC)","John Gray, Ph. D",85000,"ready","Non-Fiction","Inggris"],
+  ["B-124","Si Cacing dan Kotoran Kesayangannya","Ajahn Brahm",40000,"ready","Fantasy","Indonesia"],
+  ["B-125","Si Cacing dan Kotoran Kesayangannya 3","Ajahn Brahm",40000,"ready","Fantasy","Indonesia"]
+];
+var ICON_WA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-8.1 14.4L2.6 21.4l4.6-1.2A9.5 9.5 0 1 0 12 2.5zm0 1.9a7.6 7.6 0 1 1-3.9 14.1l-.4-.2-2.4.6.6-2.3-.3-.4A7.6 7.6 0 0 1 12 4.4zM8.9 7.8c-.2 0-.5.1-.7.4-.3.3-.9.9-.9 2.1s1 2.5 1.1 2.7c.1.2 1.8 2.9 4.5 3.9 2.2.9 2.7.7 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.5-.3-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2-1.2-.7-.7-1.2-1.5-1.4-1.8-.1-.2 0-.4.1-.5l.4-.4.3-.5v-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4z"/></svg>';
+var ICON_TH = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.2 2.5c-5.6 0-9 3.4-9 9.5s3.4 9.5 9 9.5c4.6 0 7.3-2.200 7.300-5.500 0-2.400-1.500-3.900-4.100-4.300-.1-2.300-1.400-3.600-3.500-3.600-1.400 0-2.500.6-3.100 1.600l1.500 1c.4-.6 1-.9 1.700-.9 1 0 1.600.6 1.700 1.800-.5-.1-1.100-.1-1.700-.1-2.300 0-3.800 1.200-3.800 3 0 1.800 1.500 3 3.500 3 1.900 0 3.200-1 3.700-2.700 1 .3 1.400.9 1.400 1.800 0 1.500-1.700 3.100-5.400 3.100-4.300 0-7-2.600-7-7.500s2.700-7.500 7.100-7.500c3.200 0 5.300 1.300 6.200 3.900l1.800-.6c-1.200-3.200-3.800-5-8-5zm-.9 11.100c-1 0-1.600-.5-1.600-1.200s.7-1.200 1.900-1.200c.5 0 1 0 1.500.1-.1 1.500-.8 2.300-1.800 2.300z"/></svg>';
+var ICON_SP = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.500a3.700 3.700 0 0 0-3.700 3.500H4.500L3.500 21.500h17L19.500 6h-3.800A3.700 3.700 0 0 0 12 2.500zm0 1.800c1 0 1.800.7 1.900 1.700h-3.800c.1-1 .9-1.700 1.900-1.700zm.1 6.200c1.600 0 2.600.8 2.700 1.800h-1.400c-.1-.4-.6-.7-1.300-.7-.7 0-1.100.3-1.100.7 0 1.200 4 .6 4 3.100 0 1.300-1.200 2.200-3 2.200-1.700 0-2.900-.8-3-2h1.500c.1.500.7.9 1.500.9.8 0 1.300-.3 1.300-.8 0-1.300-4-.6-4-3.100 0-1.200 1.100-2.100 2.800-2.100z"/></svg>';
+var EXTS = ["jpg","jpeg","png","webp","JPG","JPEG"];
+var ON_BOOK = "this.closest('.book').classList.add('has-img')";
+var ON_CAT = "this.parentNode.classList.add('ok')";
+var filter = "all", query = "", cat = [], langSel = [], kondSel = [], stSel = [], pmin = null, pmax = null, toastTimer;
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function rp(n){return "Rp" + n.toLocaleString("id-ID")}
+// Satu buku boleh punya beberapa kategori: tulis dipisah tanda | , contoh "CTM | New Arrival!"
+function catsOf(b){
+  var c = b[5];
+  if(!c) return ["Lainnya"];
+  var a = (Array.isArray(c) ? c : String(c).split("|")).map(function(x){return String(x).trim()})
+    .filter(function(x, i, arr){return x && arr.indexOf(x) === i});
+  return a.length ? a : ["Lainnya"];
+}
+function catOf(b){return catsOf(b)[0]}
+// Isian ke-7 = bahasa, isian ke-8 = link Shopee buku (opsional). Link Shopee lama di isian ke-7 tetap terbaca.
+function isUrl(v){return /^https?:/i.test(String(v || ""))}
+function langOf(b){return b[6] && !isUrl(b[6]) ? String(b[6]).trim() : ""}
+function shopeeOf(b){return isUrl(b[6]) ? b[6] : (isUrl(b[7]) ? b[7] : "")}
+function slug(n){return n.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")}
+function initials(n){return n.replace(/[^A-Za-z0-9]/g,"").slice(0,2).toUpperCase() || "#"}
+// Mencoba jpg, lalu png, lalu webp. Kalau semuanya tidak ada, gambar dibuang dan blok warna yang tampil.
+function nextImg(el){
+  var i = +(el.getAttribute("data-i") || 0) + 1;
+  if(i < EXTS.length){el.setAttribute("data-i", i); el.src = el.getAttribute("data-base") + "." + EXTS[i]}
+  else el.remove();
+}
+function imgTag(base, onload){
+  return '<img src="' + base + '.jpg" data-base="' + base + '" data-i="0" alt="" loading="lazy" onload="' + onload + '" onerror="nextImg(this)">';
+}
+function toast(t){
+  var el = document.getElementById("toast");
+  el.textContent = t; el.className = "on";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){el.className = ""}, 3200);
+}
+function categories(){
+  var map = {}, order = [];
+  BOOKS.forEach(function(b){
+    catsOf(b).forEach(function(c){
+      if(!map[c]){map[c] = {n:0, r:0}; order.push(c)}
+      map[c].n++;
+      if(b[4] === "ready") map[c].r++;
+    });
+  });
+  order.sort(function(a,b){
+    var x = CATEGORY_ORDER.indexOf(a), y = CATEGORY_ORDER.indexOf(b);
+    return (x < 0 ? 9999 : x) - (y < 0 ? 9999 : y);
+  });
+  return order.map(function(c){return {name:c, n:map[c].n, r:map[c].r}});
+}
+var CATS = categories();
+var PALETTE = ["#2d56a8","#3f6fc4","#1f4287","#4a7fd0","#2b6f9e","#5a62b8","#2f7fa8","#4458a8"];
+function colorOf(c){
+  var i = CATS.map(function(x){return x.name}).indexOf(c);
+  return PALETTE[(i < 0 ? 0 : i) % PALETTE.length];
+}
+function renderCats(){
+  document.getElementById("cats").innerHTML = CATS.map(function(c){
+    return '<button class="cat" data-cat="' + esc(c.name) + '" aria-pressed="' + (cat === c.name) + '">' +
+      '<span class="ico" style="background:' + colorOf(c.name) + '"><span>' + esc(initials(c.name)) + '</span>' + imgTag("/images/kategori/" + slug(c.name), ON_CAT) + '</span>' +
+      '<span class="ct"><b>' + esc(c.name) + '</b><small>' + c.r + ' tersedia dari ' + c.n + '</small></span></button>';
+  }).join("");
+}
+// ===== PAGING =====
+var PER_PAGE = 20, page = 1, lastSig = "";
+(function(){
+  var p = new URLSearchParams(location.search);
+  function lst(k){return p.get(k) ? p.get(k).split(",").filter(Boolean) : []}
+  cat = lst("kat"); langSel = lst("bhs"); kondSel = lst("kond");
+  var mn = p.get("min"), mx = p.get("max");
+  if(mn !== null && mn !== "" && !isNaN(+mn)) pmin = +mn;
+  if(mx !== null && mx !== "" && !isNaN(+mx)) pmax = +mx;
+  if(p.get("cari")) query = p.get("cari");
+  stSel = lst("status").filter(function(x){return x === "ready" || x === "sold"});
+  var h = parseInt(p.get("hal"), 10);
+  if(h > 1) page = h;
+  lastSig = sigNow();
+  document.getElementById("q").value = query;
+  if(pmin !== null) document.getElementById("pmin").value = pmin;
+  if(pmax !== null) document.getElementById("pmax").value = pmax;
+  
+})();
+function renderPager(pages){
+    try{
+    var p = new URLSearchParams();
+    if(cat.length) p.set("kat", cat.join(","));
+    if(langSel.length) p.set("bhs", langSel.join(","));
+    if(kondSel.length) p.set("kond", kondSel.join(","));
+    if(pmin !== null) p.set("min", pmin);
+    if(pmax !== null) p.set("max", pmax);
+    if(query.trim()) p.set("cari", query.trim());
+    if(stSel.length) p.set("status", stSel.join(","));
+    if(page > 1) p.set("hal", page);
+    var qs = p.toString();
+    history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + location.hash);
+  }catch(err){}
+  var el = document.getElementById("pager");
+  if(pages < 2){el.innerHTML = ""; return}
+  var nums = [];
+  for(var i = 1; i <= pages; i++){
+    if(i === 1 || i === pages || Math.abs(i - page) <= 1) nums.push(i);
+    else if(nums[nums.length - 1] !== "…") nums.push("…");
+  }
+  el.innerHTML = '<button class="pg" data-p="' + (page - 1) + '"' + (page === 1 ? " disabled" : "") + ' aria-label="Halaman sebelumnya">‹</button>' +
+    nums.map(function(n){
+      return n === "…" ? '<span class="pgdot">…</span>'
+        : '<button class="pg' + (n === page ? " on" : "") + '" data-p="' + n + '"' + (n === page ? ' aria-current="page"' : "") + '>' + n + '</button>';
+    }).join("") +
+    '<button class="pg" data-p="' + (page + 1) + '"' + (page === pages ? " disabled" : "") + ' aria-label="Halaman berikutnya">›</button>';
+}
+document.getElementById("pager").addEventListener("click", function(e){
+  var b = e.target.closest(".pg"); if(!b || b.disabled) return;
+  page = +b.getAttribute("data-p");
+  render(); toList();
+});
+function render(){
+  var q = query.trim().toLowerCase();
+  var list = BOOKS.filter(function(b){
+    if(cat.length && !catsOf(b).some(function(c){return cat.indexOf(c) > -1})) return false;
+    if(langSel.length && langSel.indexOf(langOf(b)) < 0) return false;
+    if(kondSel.length && kondSel.indexOf(b[8] || "") < 0) return false;
+    if(stSel.length && stSel.indexOf(b[4]) < 0) return false;
+    if(pmin !== null && b[3] < pmin) return false;
+    if(pmax !== null && b[3] > pmax) return false;
+    return !q || (b[1] + " " + b[2] + " " + catsOf(b).join(" ") + " " + langOf(b)).toLowerCase().indexOf(q) > -1;
+  });
+  
+  
+  
+  var sig = sigNow();
+  if(sig !== lastSig){page = 1; lastSig = sig}
+  var pages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+  if(page > pages) page = pages;
+  var from = (page - 1) * PER_PAGE, pageList = list.slice(from, from + PER_PAGE);
+  document.getElementById("count").textContent = list.length > PER_PAGE
+    ? "Menampilkan " + (from + 1) + "–" + (from + pageList.length) + " dari " + list.length + " buku"
+    : list.length + " buku";
+  renderPager(pages);
+  var html = pageList.map(function(b){
+    var sold = b[4] === "sold", color = colorOf(catOf(b));
+    var cond = (b[8] ? b[8] : "") || langOf(b);
+    return '<article class="book' + (sold ? " sold" : "") + '">' +
+      '<div class="bk-top"><span class="bk-badge' + (sold ? " is-sold" : "") + '">' + (sold ? "Sold" : "Tersedia") + '</span>' +
+      '<div class="cover" data-k="' + esc(b[0]) + '" tabindex="0" role="button" aria-label="Lihat foto dan detail ' + esc(b[1]) + '" style="background:' + color + '">' +
+      imgTag("/images/buku/" + encodeURIComponent(b[0].toLowerCase()), ON_BOOK) +
+      (sold ? '<span class="stamp">Sold</span>' : "") +
+      '<b>' + esc(b[1]) + '</b><i>Rumah Hobi · ' + esc(b[0]) + '</i></div></div>' +
+      '<div class="bk-body"><h3 class="bk-title">' + esc(b[1]) + '</h3><div class="bk-author">' + esc(b[2]) + '</div>' +
+      '<div class="bk-meta"><span class="bk-price">' + rp(b[3]) + '</span><span class="bk-cond">' + esc(cond) + '</span></div>' +
+      '<button class="bk-btn" data-k="' + esc(b[0]) + '">Lihat detail</button></div></article>';
+  }).join("");
+  document.getElementById("grid").innerHTML = html || '<div class="empty">Tidak ada buku yang cocok. Coba kata kunci lain atau pilih filter Semua.</div>';
+}
+function toList(){
+  var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.getElementById("semua").scrollIntoView({behavior: calm ? "auto" : "smooth", block: "start"});
+}
+var qEl = document.getElementById("q");
+qEl.addEventListener("input", function(e){
+  query = e.target.value;
+  
+  render();
+});
+qEl.addEventListener("keydown", function(e){if(e.key === "Enter") toList()});
+
+
+
+// Threads tidak bisa mengisi pesan otomatis, jadi pesannya disalin supaya tinggal ditempel di DM
+document.getElementById("grid").addEventListener("click", function(e){
+  var a = e.target.closest(".th"); if(!a) return;
+  var m = a.getAttribute("data-msg");
+  try{
+    navigator.clipboard.writeText(m).then(function(){toast("Pesan disalin. Tempel di DM Threads.")}, function(){toast("Sebutkan judul dan kode buku di DM ya.")});
+  }catch(err){toast("Sebutkan judul dan kode buku di DM ya.")}
+});
+loadBooks();
+
+// ===== SIDEBAR FILTER + FILTER HARGA =====
+function sigNow(){return [cat.join(","), stSel.join(","), query.trim().toLowerCase(), langSel.join(","), kondSel.join(","), pmin, pmax].join("|")}
+function selOf(g){return g === "cat" ? cat : g === "lang" ? langSel : g === "kond" ? kondSel : stSel}
+function uniqs(a){return a.filter(function(x, i){return a.indexOf(x) === i})}
+function renderFilters(){
+  var langs = uniqs(BOOKS.map(langOf)).filter(Boolean);
+  var konds = uniqs(BOOKS.map(function(b){return b[8] || ""})).filter(Boolean);
+  function grp(g, title, items){
+    if(!items.length) return "";
+    return '<div class="fg"><h3>' + title + '</h3>' + items.map(function(it){
+      return '<label class="ck"><input type="checkbox" data-g="' + g + '" value="' + esc(it.v) + '"' + (selOf(g).indexOf(it.v) > -1 ? " checked" : "") + '><span>' + esc(it.l) + '</span><span class="n">' + it.n + '</span></label>';
+    }).join("") + '</div>';
+  }
+  document.getElementById("filters").innerHTML =
+    grp("cat", "Kategori", CATS.map(function(c){return {v:c.name, l:c.name, n:c.n}})) +
+    grp("lang", "Bahasa", langs.map(function(l){return {v:l, l:l, n:BOOKS.filter(function(b){return langOf(b) === l}).length}})) +
+    grp("kond", "Kondisi Buku", konds.map(function(k){return {v:k, l:k, n:BOOKS.filter(function(b){return b[8] === k}).length}})) +
+    grp("st", "Ketersediaan", [
+      {v:"ready", l:"Tersedia", n:BOOKS.filter(function(b){return b[4] === "ready"}).length},
+      {v:"sold", l:"Sold", n:BOOKS.filter(function(b){return b[4] === "sold"}).length}]);
+}
+document.getElementById("filters").addEventListener("change", function(e){
+  var t = e.target; if(!t.matches("input[data-g]")) return;
+  var g = t.getAttribute("data-g"), arr = selOf(g), i = arr.indexOf(t.value);
+  if(t.checked && i < 0) arr.push(t.value);
+  if(!t.checked && i > -1) arr.splice(i, 1);
+  render();
+  if(t.checked && g === "cat") track("kategori-" + slug(t.value), "Kategori: " + t.value);
+});
+function setPrice(){
+  var a = document.getElementById("pmin").value, b = document.getElementById("pmax").value;
+  pmin = a === "" ? null : +a; pmax = b === "" ? null : +b;
+  [].forEach.call(document.querySelectorAll("#pchips .chip"), function(c){
+    c.setAttribute("aria-pressed", c.getAttribute("data-min") === a && c.getAttribute("data-max") === b);
+  });
+  render();
+}
+document.getElementById("pmin").addEventListener("input", setPrice);
+document.getElementById("pmax").addEventListener("input", setPrice);
+document.getElementById("pchips").addEventListener("click", function(e){
+  var c = e.target.closest(".chip"); if(!c) return;
+  var on = c.getAttribute("aria-pressed") === "true";
+  document.getElementById("pmin").value = on ? "" : c.getAttribute("data-min");
+  document.getElementById("pmax").value = on ? "" : c.getAttribute("data-max");
+  setPrice();
+});
+document.getElementById("reset").addEventListener("click", function(){
+  cat = []; langSel = []; kondSel = []; stSel = []; pmin = null; pmax = null; query = "";
+  document.getElementById("q").value = "";
+  document.getElementById("pmin").value = ""; document.getElementById("pmax").value = "";
+  [].forEach.call(document.querySelectorAll("#pchips .chip"), function(c){c.setAttribute("aria-pressed", "false")});
+  renderFilters(); render();
+});
+document.getElementById("ftoggle").addEventListener("click", function(){
+  var o = document.getElementById("side").classList.toggle("open");
+  this.setAttribute("aria-expanded", o);
+});
+// ===== POP UP FOTO BUKU =====
+// Foto pertama: images/buku/b-011.jpg (atau .jpeg). Foto tambahan: b-011-2.jpg, b-011-3.jpg, dst (harus berurutan).
+var MAX_PHOTOS = 8;
+var modal = document.getElementById("modal"), slides = [], sIdx = 0, mToken = 0, lastFocus = null, okExt = "";
+function probe(base, cb){
+  var list = okExt ? [okExt].concat(EXTS.filter(function(e){return e !== okExt})) : EXTS, i = 0;
+  (function next(){
+    if(i >= list.length) return cb(null);
+    var ext = list[i++], im = new Image();
+    im.onload = function(){okExt = ext; cb(base + "." + ext)};
+    im.onerror = next;
+    im.src = base + "." + ext;
+  })();
+}
+function showSlide(i){
+  var n = slides.length, img = document.getElementById("mimg");
+  document.getElementById("mload").hidden = true;
+  document.getElementById("mfall").hidden = n > 0;
+  img.hidden = !n;
+  ["mprev","mnext","mcount"].forEach(function(id){document.getElementById(id).hidden = n < 2});
+  if(!n) return;
+  sIdx = (i + n) % n;
+  img.src = slides[sIdx];
+  document.getElementById("mcount").textContent = (sIdx + 1) + " / " + n;
+}
+function loadSlides(b, token){
+  var base = "/images/buku/" + encodeURIComponent(b[0].toLowerCase()), n = 1;
+  (function step(){
+    if(n > MAX_PHOTOS) return;
+    probe(n === 1 ? base : base + "-" + n, function(url){
+      if(token !== mToken) return;
+      if(!url){if(!slides.length) showSlide(0); return}
+      slides.push(url);
+      showSlide(slides.length === 1 ? 0 : sIdx);
+      n++; step();
+    });
+  })();
+}
+function modalActs(b){
+  if(b[4] === "sold") return '<div class="buy"><span class="done">Buku ini sudah terjual dan ditampilkan sebagai referensi.</span></div>';
+  var msg = "Halo kak, aku mau beli buku “" + b[1] + "” (" + b[0] + ")";
+  var wa = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
+  var th = "https://www.threads.com/@" + THREADS_USER;
+  var sp = shopeeOf(b);
+  return '<div class="buy"><h4 class="buyh">Beli lewat</h4><div class="buylist">' +
+    '<a class="act wa" href="' + esc(wa) + '" target="_blank" rel="noopener">' + ICON_WA + '<span>WhatsApp</span><small>' + rp(b[3]) + '</small></a>' +
+    '<a class="act th" href="' + esc(th) + '" target="_blank" rel="noopener" data-msg="' + esc(msg) + '">' + ICON_TH + '<span>DM Threads</span><small>' + rp(b[3]) + '</small></a>' +
+    (sp ? '<a class="act sp" href="' + esc(sp) + '" target="_blank" rel="noopener">' + ICON_SP + '<span>Shopee</span><small>' + rp(Math.round(b[3] * SHOPEE_MARKUP)) + '</small></a>' : '') +
+    '</div><p class="note">Judul dan kode buku (' + esc(b[0]) + ') ikut terkirim. Threads tidak bisa mengisi pesan otomatis, jadi pesan disalin dulu — tinggal tempel di DM.' +
+    (sp ? ' Harga Shopee sudah +10% biaya admin.' : ' Shopee hanya by request.') + ' Ongkir ditanggung pembeli.</p></div>';
+}
+function openModal(kode){
+  var b = BOOKS.filter(function(x){return x[0] === kode})[0];
+  if(!b) return;
+  slides = []; sIdx = 0; mToken++;
+  lastFocus = document.activeElement;
+  var sold = b[4] === "sold", fb = document.getElementById("mfall");
+  fb.style.background = colorOf(catOf(b));
+  fb.innerHTML = '<b>' + esc(b[1]) + '</b><i>' + esc(b[2]) + '</i>';
+  document.getElementById("minfo").innerHTML =
+    '<h3 id="mtitle">' + esc(b[1]) + '</h3><div class="ma">' + esc(b[2]) + '</div>' +
+    '<div class="mprice' + (sold ? " sold" : "") + '">' + rp(b[3]) + '</div>' +
+    '<div class="kode">Kode ' + esc(b[0]) + '</div><div class="kode">' + esc(catsOf(b).join(", ")) + '</div>' +
+    (langOf(b) ? '<div><span class="lang">' + esc(langOf(b)) + '</span></div>' : '') + modalActs(b);
+  document.getElementById("mimg").hidden = true;
+  fb.hidden = true;
+  document.getElementById("mload").hidden = false;
+  ["mprev","mnext","mcount"].forEach(function(id){document.getElementById(id).hidden = true});
+  modal.hidden = false;
+  document.body.style.overflow = "hidden";
+  document.getElementById("mclose").focus();
+    setHash(b[0]); addCopyBtn();
+  loadSlides(b, mToken);
+}
+function closeModal(){
+  modal.hidden = true; mToken++; clearHash();
+  document.body.style.overflow = "";
+  if(lastFocus && lastFocus.focus) lastFocus.focus();
+}
+document.getElementById("grid").addEventListener("click", function(e){
+  if(e.target.closest(".act")) return;
+  var c = e.target.closest(".cover, .bk-btn");
+  if(c) openModal(c.getAttribute("data-k"));
+});
+document.getElementById("grid").addEventListener("keydown", function(e){
+  if(e.key !== "Enter" && e.key !== " ") return;
+  var c = e.target.closest(".cover");
+  if(c && e.target === c){e.preventDefault(); openModal(c.getAttribute("data-k"))}
+});
+modal.addEventListener("click", function(e){if(e.target === modal) closeModal()});
+document.getElementById("mclose").addEventListener("click", closeModal);
+document.getElementById("mprev").addEventListener("click", function(){showSlide(sIdx - 1)});
+document.getElementById("mnext").addEventListener("click", function(){showSlide(sIdx + 1)});
+document.addEventListener("keydown", function(e){
+  if(modal.hidden) return;
+  if(e.key === "Escape") closeModal();
+  else if(e.key === "ArrowLeft") showSlide(sIdx - 1);
+  else if(e.key === "ArrowRight") showSlide(sIdx + 1);
+});
+var tx = null;
+document.getElementById("mslide").addEventListener("touchstart", function(e){tx = e.touches[0].clientX}, {passive:true});
+document.getElementById("mslide").addEventListener("touchend", function(e){
+  if(tx === null || slides.length < 2) return;
+  var dx = e.changedTouches[0].clientX - tx; tx = null;
+  if(Math.abs(dx) > 40) showSlide(sIdx + (dx < 0 ? 1 : -1));
+});
+document.getElementById("minfo").addEventListener("click", function(e){
+  var a = e.target.closest(".th"); if(!a) return;
+  var m = a.getAttribute("data-msg");
+  try{
+    navigator.clipboard.writeText(m).then(function(){toast("Pesan disalin. Tempel di DM Threads.")}, function(){toast("Sebutkan judul dan kode buku di DM ya.")});
+  }catch(err){toast("Sebutkan judul dan kode buku di DM ya.")}
+});
+// ===== LINK PER BUKU (contoh: alamat-katalog/#b-011) =====
+var pushed = false, curKode = "";
+function setHash(kode){
+  curKode = kode;
+  var h = "#" + kode.toLowerCase();
+  if(location.hash.toLowerCase() === h) return;
+  history.pushState(null, "", h); pushed = true;
+}
+function clearHash(){
+  curKode = "";
+  if(!location.hash){pushed = false; return}
+  if(pushed){pushed = false; history.back()}
+  else history.replaceState(null, "", location.pathname + location.search);
+}
+function addCopyBtn(){
+  document.getElementById("minfo").insertAdjacentHTML("beforeend", '<button class="copylink" id="mcopy">Salin link buku ini</button>');
+}
+document.getElementById("minfo").addEventListener("click", function(e){
+  if(!e.target.closest(".copylink")) return;
+  var url = location.href.split("#")[0] + "#" + curKode.toLowerCase();
+  try{
+    navigator.clipboard.writeText(url).then(function(){toast("Link buku disalin.")}, function(){toast("Salin dari address bar ya.")});
+  }catch(err){toast("Salin dari address bar ya.")}
+});
+function syncHash(){
+  var k = "";
+  try{k = decodeURIComponent(location.hash.slice(1)).toLowerCase()}catch(err){}
+  if(!k){if(!modal.hidden) closeModal(); return}
+  var b = BOOKS.filter(function(x){return x[0].toLowerCase() === k})[0];
+  if(b && (modal.hidden || curKode !== b[0])) openModal(b[0]);
+}
+window.addEventListener("hashchange", syncHash);
+syncHash();
+// ===== STATISTIK EVENT (GoatCounter) =====
+// Mencatat: buka pop up, klik WhatsApp/Threads/Shopee, salin link, pilih kategori, dan kunjungan dari link buku.
+function track(name, title, tries){
+  tries = tries || 0;
+  if(window.goatcounter && window.goatcounter.count){
+    try{window.goatcounter.count({path: name, title: title || name, event: true})}catch(err){}
+  } else if(tries < 20){
+    setTimeout(function(){track(name, title, tries + 1)}, 500);
+  }
+}
+function trackBook(aksi, kode){
+  var b = BOOKS.filter(function(x){return x[0] === kode})[0];
+  if(!b) return;
+  track(aksi + "-" + kode.toLowerCase(), aksi + ": " + b[1] + " (" + b[0] + ")");
+}
+document.addEventListener("click", function(e){
+  var a = e.target.closest(".act, .copylink, .cover, .cat, .bk-btn");
+  if(!a) return;
+  var card = a.closest(".book");
+  var kode = a.closest("#modal") ? curKode : (card ? card.querySelector(".cover").getAttribute("data-k") : "");
+  if(a.classList.contains("act")){
+    var aksi = a.classList.contains("wa") ? "wa" : a.classList.contains("th") ? "threads" : a.classList.contains("sp") ? "shopee" : "";
+    if(aksi && kode) trackBook(aksi, kode);
+  } else if(a.classList.contains("copylink")){
+    if(kode) trackBook("salin-link", kode);
+  } else if(a.classList.contains("cover") || a.classList.contains("bk-btn")){
+    trackBook("buka", a.getAttribute("data-k"));
+  } else if(a.classList.contains("cat")){
+    var c = a.getAttribute("data-cat");
+    track("kategori-" + slug(c), "Kategori: " + c);
+  }
+});
+(function(){
+  var k = "";
+  try{k = decodeURIComponent(location.hash.slice(1)).toLowerCase()}catch(err){}
+  var b = k ? BOOKS.filter(function(x){return x[0].toLowerCase() === k})[0] : null;
+  if(b) trackBook("link", b[0]);
+})();
+// ===== DATA DARI GOOGLE SHEETS =====
+// Alamat CSV diisi di bagian pengaturan atas (SHEET_CSV). Kalau kosong, katalog memakai daftar BOOKS di file ini.
+function parseCSV(t){
+  var rows = [], row = [], f = "", q = false, c;
+  t = String(t).replace(/^\uFEFF/, "");
+  for(var i = 0; i < t.length; i++){
+    c = t.charAt(i);
+    if(q){
+      if(c === '"'){if(t.charAt(i + 1) === '"'){f += '"'; i++} else q = false}
+      else f += c;
+    } else if(c === '"') q = true;
+    else if(c === ","){row.push(f); f = ""}
+    else if(c === "\n"){row.push(f); rows.push(row); row = []; f = ""}
+    else if(c !== "\r") f += c;
+  }
+  if(f !== "" || row.length){row.push(f); rows.push(row)}
+  return rows;
+}
+function rowsToBooks(rows){
+  if(!rows.length) return null;
+  var head = rows[0].map(function(h){return String(h).trim().toLowerCase()});
+  function col(names){
+    for(var i = 0; i < names.length; i++){var k = head.indexOf(names[i]); if(k > -1) return k}
+    return -1;
+  }
+  var iK = col(["kode"]), iJ = col(["judul","judul buku"]), iP = col(["penulis","author"]), iH = col(["harga","harga listing"]),
+      iS = col(["status"]), iC = col(["kategori"]), iB = col(["bahasa"]), iL = col(["link_shopee","link shopee","link"]), iKo = col(["kondisi"]);
+  if(iK < 0 || iJ < 0 || iH < 0 || iS < 0) return null;
+  var get = function(r, i){return i > -1 ? String(r[i] || "").trim() : ""};
+  var out = [];
+  rows.slice(1).forEach(function(r){
+    var kode = get(r, iK);
+    if(!kode) return;
+    var harga = parseInt(get(r, iH).replace(/[^0-9]/g, ""), 10) || 0;
+    var row = [kode, get(r, iJ), get(r, iP), harga, /sold|terjual/i.test(get(r, iS)) ? "sold" : "ready", get(r, iC), get(r, iB)];
+    var link = get(r, iL).split("?")[0];
+    row.push(/^https?:/i.test(link) ? link : ""); row.push(iKo > -1 ? get(r, iKo) : "");
+    out.push(row);
+  });
+  return out.length ? out : null;
+}
+function loadBooks(){
+  if(!SHEET_CSV){renderFilters(); render(); return}
+  var rendered = false;
+  
+  document.getElementById("grid").innerHTML = '<div class="empty">Memuat daftar buku…</div>';
+  function apply(list){
+    if(list){BOOKS = list; CATS = categories()}
+    renderFilters(); render(); rendered = true;
+    if(list) syncHash();
+  }
+  setTimeout(function(){if(!rendered) apply(null)}, 4000);
+  fetch(SHEET_CSV).then(function(r){
+    if(!r.ok) throw new Error("gagal");
+    return r.text();
+  }).then(function(t){
+    var list = rowsToBooks(parseCSV(t));
+    if(!list && window.console) console.warn("Data Google Sheets kosong atau judul kolom tidak cocok.");
+    if(list || !rendered) apply(list);
+  }).catch(function(){
+    if(!rendered) apply(null);
+  });
+}
+</script>
+<script data-goatcounter="https://adoptamine.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
