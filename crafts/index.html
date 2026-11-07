@@ -191,7 +191,7 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 .sh-main .count{margin:8px 0 16px;max-width:none}
 </style>
 </head>
-<body class="sh-page sh-preloved">
+<body class="sh-page sh-crafts">
 <script src="/site.js"></script>
 <main class="sh-main">
   <section class="sh-banner">
@@ -288,6 +288,7 @@ var ON_CAT = "this.parentNode.classList.add('ok')";
 var filter = "all", query = "", cat = [], langSel = [], kondSel = [], stSel = [], pmin = null, pmax = null, toastTimer;
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function rp(n){return "Rp" + n.toLocaleString("id-ID")}
+function byKode(k){return BOOKS.filter(function(x){return x[0] === k})[0]}
 // Satu produk boleh punya beberapa kategori: tulis dipisah tanda | , contoh "CTM | New Arrival!"
 function catsOf(b){
   var c = b[5];
