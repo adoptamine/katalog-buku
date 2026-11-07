@@ -191,7 +191,7 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 .sh-main .count{margin:8px 0 16px;max-width:none}
 </style>
 </head>
-<body class="sh-page sh-preloved">
+<body class="sh-page sh-toys">
 <script src="/site.js"></script>
 <main class="sh-main">
   <section class="sh-banner">
@@ -529,7 +529,7 @@ function renderFilters(){
   document.getElementById("filters").innerHTML =
     grp("cat", "Kategori", CATS.map(function(c){return {v:c.name, l:c.name, n:c.n}})) +
     grp("lang", "Material", langs.map(function(l){return {v:l, l:l, n:BOOKS.filter(function(b){return langOf(b) === l}).length}})) +
-    grp("kond", "Kondisi Buku", konds.map(function(k){return {v:k, l:k, n:BOOKS.filter(function(b){return b[8] === k}).length}})) +
+    grp("kond", "Kondisi", konds.map(function(k){return {v:k, l:k, n:BOOKS.filter(function(b){return b[8] === k}).length}})) +
     grp("st", "Ketersediaan", [
       {v:"ready", l:"Tersedia", n:BOOKS.filter(function(b){return b[4] === "ready"}).length},
       {v:"sold", l:"Sold", n:BOOKS.filter(function(b){return b[4] === "sold"}).length}]);
