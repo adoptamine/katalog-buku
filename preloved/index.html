@@ -790,7 +790,7 @@ function rowsToBooks(rows){
     for(var i = 0; i < names.length; i++){var k = head.indexOf(names[i]); if(k > -1) return k}
     return -1;
   }
-  var iK = col(["kode"]), iJ = col(["nama produk","judul","judul produk","nama","produk"]), iP = col(["material","bahan","penulis"]), iH = col(["harga","harga listing"]),
+  var iK = col(["kode"]), iJ = col(["nama produk","judul","judul produk","nama","produk"]), iP = col(["brand","merek","material","bahan","penulis"]), iH = col(["harga","harga listing"]),
       iS = col(["status"]), iC = col(["kategori"]), iB = col(["bahasa"]), iL = col(["link_shopee","link shopee","link"]), iKo = col(["kondisi"]), iF = col(["foto","gambar","foto_url"]), iV = col(["varian","variant","warna"]), iD = col(["deskripsi","keterangan","catatan"]);
   if(iK < 0 || iJ < 0 || iH < 0 || iS < 0) return null;
   var get = function(r, i){return i > -1 ? String(r[i] || "").trim() : ""};
