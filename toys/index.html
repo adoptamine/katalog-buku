@@ -195,7 +195,7 @@ input[type=search]{width:100%;padding:12px 14px;border:1px solid var(--line);bor
 <script src="/site.js"></script>
 <main class="sh-main">
   <section class="sh-banner">
-    <img src="/images/crafts/banner.png" alt="" onerror="this.remove()">
+    <img src="/images/toys/banner.png" alt="" onerror="this.remove()">
   </section>
   <h2 class="sh-title">List of Items</h2>
 
@@ -344,7 +344,7 @@ function variantPickerHTML(b){
 function fotosOf(b){return String(b[9] || "").split(/[\s,|]+/).filter(isUrl)}
 function coverImg(b){
   var fu = fotosOf(b);
-  if(!fu.length) return imgTag("/images/crafts/" + encodeURIComponent(b[0].toLowerCase()), ON_BOOK);
+  if(!fu.length) return imgTag("/images/toys/" + encodeURIComponent(b[0].toLowerCase()), ON_BOOK);
   return '<img src="' + esc(fu[0]) + '" alt="" loading="lazy" onload="' + ON_BOOK + '" onerror="this.remove()">';
 }
 document.getElementById("mimg").addEventListener("error", function(){
@@ -594,7 +594,7 @@ function showSlide(i){
 function loadSlides(b, token){
   var fu = fotosOf(b);
   if(fu.length){slides = fu.slice(); showSlide(0); return}
-  var base = "/images/crafts/" + encodeURIComponent(b[0].toLowerCase()), n = 1;
+  var base = "/images/toys/" + encodeURIComponent(b[0].toLowerCase()), n = 1;
   (function step(){
     if(n > MAX_PHOTOS) return;
     probe(n === 1 ? base : base + "-" + n, function(url){
